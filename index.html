@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Jewelry Size Visualizer | Poli International">
+    <meta property="og:description" content="Visualize and compare body jewelry sizes in real-time at 1:1 scale on your screen.">
+    <meta property="og:url" content="https://poliinternational.com/jewelry-size-visualizer/">
+    <meta property="og:site_name" content="Poli International">
+    <meta property="og:image" content="https://poliinternational.com/wp-content/uploads/poli-tools-preview.jpg">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jewelry Size Visualizer | Poli International">
+    <meta name="twitter:description" content="Visualize and compare body jewelry sizes in real-time at 1:1 scale on your screen.">
+    <meta name="twitter:image" content="https://poliinternational.com/wp-content/uploads/poli-tools-preview.jpg">
+    <meta property="og:image" content="https://poliinternational.com/wp-content/uploads/poli-tools-preview.jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Body Piercing Jewelry Size Visualizer - See actual jewelry sizes at 1:1 scale, compare body piercing jewelry, and get professional fitting recommendations with both imperial and metric measurements.">
+    <title>Body Piercing Jewelry Size Visualizer & Fitting Guide | Poli International</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../../assets/favicon.ico">
+<script type='application/ld+json'>
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Body Jewelry Size Visualizer",
+  "url": "https://poliinternational.com/tools/jewelry-size-visualizer/",
+  "description": "Visualize how different jewelry sizes look on the body",
+  "applicationCategory": "UtilityApplication",
+  "operatingSystem": "Any",
+  "browserRequirements": "Requires JavaScript. Requires HTML5.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "codeRepository": "https://github.com/poli-international/jewelry-size-visualizer",
+  "author": {
+    "@type": "Organization",
+    "name": "Poli International",
+    "url": "https://poliinternational.com",
+    "sameAs": [
+      "https://github.com/poli-international"
+    ]
+  },
+  "creator": {
+    "@type": "Organization",
+    "name": "Poli International",
+    "url": "https://poliinternational.com"
+  },
+  "maintainer": {
+    "@type": "Organization",
+    "name": "Poli International",
+    "url": "https://poliinternational.com"
+  },
+  "dateModified": "2026-02-07",
+  "license": "https://opensource.org/licenses/MIT",
+  "isAccessibleForFree": true
+}
+</script>
+
+<style>
+/* Breadcrumb Styles */
+.breadcrumb-nav {
+    padding: 1rem 0;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.breadcrumb-nav a {
+    color: #0693e3;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.breadcrumb-nav a:hover {
+    color: #0575be;
+    text-decoration: underline;
+}
+
+.breadcrumb-nav span {
+    color: #666;
+    margin: 0 0.5rem;
+}
+
+.breadcrumb-nav strong {
+    color: #333;
+}
+
+/* Dark mode breadcrumb */
+body.dark-mode .breadcrumb-nav span {
+    color: #999;
+}
+
+body.dark-mode .breadcrumb-nav a {
+    color: #60a5fa;
+}
+
+body.dark-mode .breadcrumb-nav strong {
+    color: #e0e0e0;
+}
+</style>
+</head>
+<body>
+<nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <a href="https://poliinternational.com/">Home</a>
+    <span>›</span>
+    <a href="https://poliinternational.com/tools/">Tools</a>
+    <span>›</span>
+    <a href="https://poliinternational.com/tools/#piercing-tools">Piercing Tools</a>
+    <span>›</span>
+    <strong>Jewelry Size Visualizer</strong>
+</nav>
+
+<!-- IFRAME DETECTION - RUNS IMMEDIATELY -->
+<script>
+(function() {
+    'use strict';
+
+    // Detect if we're in an iframe
+    var isInIframe = (window.self !== window.top);
+
+    if (isInIframe) {
+        console.log('[IFRAME MODE] Detected - cleaning up...');
+
+        // Add style to HEAD immediately to prevent loading/showing elements
+        var style = document.createElement('style');
+        style.textContent = `
+            .site-header,
+            .tool-title-section,
+            header,
+            footer,
+            .footer,
+            .community-feedback,
+            .feedback-section,
+            .newsletter-section,
+            .email-signup,
+            .get-notified,
+            .social-share {
+                display: none !important;
+                visibility: hidden !important;
+            }
+            .nav-tabs {
+                top: 0 !important;
+                position: sticky !important;
+            }
+            body {
+                padding-top: 0 !important;
+                margin-top: 0 !important;
+            }
+            .main, main {
+                padding-top: 1rem !important;
+                margin-top: 0 !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Also remove from DOM when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            var selectorsToRemove = [
+                '.site-header',
+                '.tool-title-section',
+                'header:not(.visualizer-header):not(.gauge-converter__header)',
+                'footer',
+                '.footer',
+                '.community-feedback',
+                '.feedback-section',
+                '.newsletter-section',
+                '.email-signup',
+                '.get-notified',
+                '.social-share'
+            ];
+
+            selectorsToRemove.forEach(function(selector) {
+                var elements = document.querySelectorAll(selector);
+                elements.forEach(function(el) {
+                    if (el && el.parentNode) {
+                        el.parentNode.removeChild(el);
+                        console.log('[IFRAME MODE] Removed:', selector);
+                    }
+                });
+            });
+
+            // Fix nav positioning
+            var navTabs = document.querySelector('.nav-tabs');
+            if (navTabs) {
+                navTabs.style.top = '0';
+                navTabs.style.position = 'sticky';
+                console.log('[IFRAME MODE] Fixed nav position');
+            }
+
+            console.log('[IFRAME MODE] Cleanup complete!');
+        });
+    }
+})();
+</script>
+
+    <!-- Top Navigation Header (matching homepage style) -->
+    <header class="site-header">
+        <div class="site-header__container">
+            <a href="https://poliinternational.com/" class="site-header__logo-link">
+                <img src="images/Poli-International-Co.webp" alt="Poli International" class="site-header__logo">
+            </a>
+            <nav class="site-nav">
+                <a href="https://poliinternational.com/" class="site-nav__link">HOME</a>
+                <a href="https://poliinternational.com/who-we-are/" class="site-nav__link">ABOUT</a>
+                <a href="https://poliinternational.com/our-creation/" class="site-nav__link">INNOVATION</a>
+                <a href="https://poliinternational.com/they-trust-us/" class="site-nav__link">They trust us!</a>
+                <a href="https://poliinternational.com/contact-us/" class="site-nav__link">CONTACT</a>
+            </nav>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Tool Title Section -->
+    <section class="tool-title-section">
+        <div class="container">
+            <h1 class="tool-title">Body Piercing Jewelry Size Visualizer & Fitting Guide</h1>
+<!-- GitHub CTA -->
+<div class='github-cta' style='margin: 1.5rem 0;'>
+  <a href='https://github.com/poli-international/jewelry-size-visualizer' 
+     target='_blank' rel='noopener noreferrer' class='btn-github' 
+     style='display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: #24292e; color: #ffffff; border-radius: 6px; text-decoration: none; font-weight: 500;'>
+    <svg width='20' height='20' viewBox='0 0 16 16' fill='currentColor'>
+      <path d='M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z'/>
+    </svg>
+    <span>View on GitHub</span>
+  </a>
+</div>
+<!-- GitHub Stats -->
+<div class='github-stats' style='display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;'>
+  <img src='https://img.shields.io/github/stars/poli-international/jewelry-size-visualizer?style=social' alt='Stars' loading='lazy'>
+  <img src='https://img.shields.io/github/last-commit/poli-international/jewelry-size-visualizer' alt='Last commit' loading='lazy'>
+</div>
+
+            <p class="tool-subtitle">See actual piercing jewelry sizes at 1:1 scale • Virtual Try-On • Professional Fitting Guide</p>
+        </div>
+    </section>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="nav-tabs">
+        <div class="container">
+            <button class="nav-tab active" data-tab="visualizer">
+                <span class="nav-tab__icon">👁️</span>
+                <span class="nav-tab__text">Visualizer</span>
+            </button>
+            <button class="nav-tab" data-tab="try-on">
+                <span class="nav-tab__icon">📸</span>
+                <span class="nav-tab__text">Virtual Try-On</span>
+            </button>
+            <button class="nav-tab" data-tab="compare">
+                <span class="nav-tab__icon">⚖️</span>
+                <span class="nav-tab__text">Size Compare</span>
+            </button>
+            <button class="nav-tab" data-tab="anatomy">
+                <span class="nav-tab__icon">🎯</span>
+                <span class="nav-tab__text">Body Guide</span>
+            </button>
+            <button class="nav-tab" data-tab="styles">
+                <span class="nav-tab__icon">✨</span>
+                <span class="nav-tab__text">Style Selector</span>
+            </button>
+            <button class="nav-tab" data-tab="stretching">
+                <span class="nav-tab__icon">📊</span>
+                <span class="nav-tab__text">Stretching Guide</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <main class="main">
+        <div class="container">
+
+            <!-- Tab 1: Interactive Visualizer -->
+            <section id="tab-visualizer" class="tab-content active">
+                <div class="section-header">
+                    <h2 class="section-title">Interactive Jewelry Visualizer</h2>
+                    <p class="section-description">View jewelry at true 1:1 scale on your screen. All measurements shown in both imperial and metric.</p>
+                </div>
+
+                <!-- Calibration Banner -->
+                <div class="calibration-banner" id="calibration-banner">
+                    <div class="calibration-banner__content">
+                        <span class="calibration-banner__icon">⚠️</span>
+                        <div class="calibration-banner__text">
+                            <strong>Calibration Required:</strong> For accurate 1:1 scale display, please calibrate your screen first.
+                        </div>
+                        <button class="btn btn--primary btn--small" id="calibrate-button">Calibrate Now</button>
+                    </div>
+                </div>
+
+                <!-- Filter Controls -->
+                <div class="filter-panel">
+                    <div class="filter-group" style="grid-column: 1 / -1;">
+                        <p style="font-size: 0.875rem; color: var(--text-tertiary); margin-bottom: 0.5rem;">
+                            <strong>💡 Tip:</strong> Showing popular items by default for faster loading. Use filters below to see all items.
+                        </p>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-category" class="filter-label">Category:</label>
+                        <select id="filter-category" class="filter-select">
+                            <option value="all">All Jewelry</option>
+                            <option value="rings">Rings</option>
+                            <option value="labrets">Labrets & Studs</option>
+                            <option value="barbells">Barbells</option>
+                            <option value="circular">Circular Barbells & Horseshoes</option>
+                            <option value="captive">Ball Closure Rings (BCR)</option>
+                            <option value="clickers">Clickers & Seamless</option>
+                            <option value="plugs">Plugs & Tunnels</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-gauge" class="filter-label">Gauge:</label>
+                        <select id="filter-gauge" class="filter-select">
+                            <option value="all">All Gauges</option>
+                            <option value="20g">20g (0.8mm)</option>
+                            <option value="18g">18g (1.0mm)</option>
+                            <option value="16g">16g (1.2mm)</option>
+                            <option value="14g">14g (1.6mm)</option>
+                            <option value="12g">12g (2.0mm)</option>
+                            <option value="10g">10g (2.4mm)</option>
+                            <option value="8g">8g (3.2mm)</option>
+                            <option value="6g">6g (4.0mm)</option>
+                            <option value="4g">4g (5.0mm)</option>
+                            <option value="2g">2g (6.0mm)</option>
+                            <option value="0g">0g (8.0mm)</option>
+                            <option value="00g">00g (10.0mm)</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-material" class="filter-label">Material:</label>
+                        <select id="filter-material" class="filter-select">
+                            <option value="all">All Materials</option>
+                            <option value="titanium">Implant-Grade Titanium</option>
+                            <option value="steel">Surgical Steel</option>
+                            <option value="gold">14k/18k Gold</option>
+                            <option value="niobium">Niobium</option>
+                            <option value="glass">Glass</option>
+                            <option value="stone">Stone</option>
+                            <option value="acrylic">Acrylic</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="filter-location" class="filter-label">Body Location:</label>
+                        <select id="filter-location" class="filter-select">
+                            <option value="all">All Locations</option>
+                            <option value="ear">Ear</option>
+                            <option value="nose">Nose</option>
+                            <option value="lip">Lip</option>
+                            <option value="tongue">Tongue</option>
+                            <option value="eyebrow">Eyebrow</option>
+                            <option value="navel">Navel</option>
+                            <option value="nipple">Nipple</option>
+                            <option value="surface">Surface</option>
+                            <option value="genital">Genital (All)</option>
+                            <option value="male-genital">Male Genital</option>
+                            <option value="female-genital">Female Genital</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Jewelry Gallery -->
+                <div class="jewelry-gallery" id="jewelry-gallery">
+                    <!-- Jewelry items will be dynamically populated by JavaScript -->
+                    <div class="gallery-loading">
+                        
+                        <p>Loading jewelry database...</p>
+                    </div>
+                </div>
+
+                <!-- Selected Jewelry Detail View -->
+                <div class="jewelry-detail" id="jewelry-detail" style="display: none;">
+                    <div class="jewelry-detail__close" id="detail-close">✕</div>
+                    <div class="jewelry-detail__content">
+                        <div class="jewelry-detail__visual">
+                            <h3 class="jewelry-detail__title">1:1 Scale Preview</h3>
+                            <div class="jewelry-detail__canvas-wrapper">
+                                <canvas id="jewelry-canvas" class="jewelry-detail__canvas"></canvas>
+                            </div>
+                            <div class="jewelry-detail__ruler" id="detail-ruler">
+                                <!-- Ruler markings for scale reference -->
+                            </div>
+                        </div>
+                        <div class="jewelry-detail__info">
+                            <h2 id="detail-name">Jewelry Name</h2>
+                            <div class="jewelry-detail__specs">
+                                <div class="spec-row">
+                                    <span class="spec-label">Gauge:</span>
+                                    <span class="spec-value" id="detail-gauge">--</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="spec-label">Diameter/Length:</span>
+                                    <span class="spec-value" id="detail-size">--</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="spec-label">Material:</span>
+                                    <span class="spec-value" id="detail-material">--</span>
+                                </div>
+                                <div class="spec-row">
+                                    <span class="spec-label">Recommended For:</span>
+                                    <span class="spec-value" id="detail-locations">--</span>
+                                </div>
+                            </div>
+                            <div class="jewelry-detail__comparisons">
+                                <h4>Size Comparisons</h4>
+                                <ul id="detail-comparisons">
+                                    <!-- Size comparisons will be populated by JavaScript -->
+                                </ul>
+                            </div>
+                            <div class="jewelry-detail__actions">
+                                <button class="btn btn--primary" id="try-on-button">Try On Virtual</button>
+                                <button class="btn btn--secondary" id="compare-button">Add to Compare</button>
+                                <button class="btn btn--secondary" id="save-button">Save to Collection</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 2: Virtual Try-On -->
+            <section id="tab-try-on" class="tab-content">
+                <div class="section-header">
+                    <h2 class="section-title">Virtual Try-On</h2>
+                    <p class="section-description">Upload a photo and see how jewelry looks on you with accurate size overlay.</p>
+                </div>
+
+                <!-- Photo Upload Area -->
+                <div class="upload-section">
+                    <div class="upload-area" id="upload-area">
+                        <div class="upload-area__content">
+                            <div class="upload-area__icon">📷</div>
+                            <h3 class="upload-area__title">Upload Your Photo</h3>
+                            <p class="upload-area__text">Drag & drop or click to select</p>
+                            <p class="upload-area__hint">For best results: Clear, well-lit photos • Close-up of piercing area • Minimal jewelry</p>
+                            <input type="file" id="photo-upload" accept="image/*" class="upload-area__input">
+                            <button class="btn btn--primary" id="upload-button">Choose Photo</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Try-On Canvas (shown after photo upload) -->
+                <div class="try-on-workspace" id="try-on-workspace" style="display: none;">
+                    <div class="try-on-controls">
+                        <h3 class="try-on-controls__title">Calibration & Placement</h3>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                <span class="control-label__text">Scale Calibration:</span>
+                                <span class="control-label__hint">Adjust to match real size</span>
+                            </label>
+                            <div class="control-input">
+                                <button class="btn-icon" id="scale-down">-</button>
+                                <input type="range" id="scale-slider" min="50" max="150" value="100" class="slider">
+                                <button class="btn-icon" id="scale-up">+</button>
+                                <span class="control-value" id="scale-value">100%</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                <span class="control-label__text">Rotation:</span>
+                            </label>
+                            <div class="control-input">
+                                <button class="btn-icon" id="rotate-left">↶</button>
+                                <input type="range" id="rotation-slider" min="0" max="360" value="0" class="slider">
+                                <button class="btn-icon" id="rotate-right">↷</button>
+                                <span class="control-value" id="rotation-value">0°</span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label">
+                                <span class="control-label__text">Opacity:</span>
+                            </label>
+                            <div class="control-input">
+                                <input type="range" id="opacity-slider" min="10" max="100" value="100" class="slider">
+                                <span class="control-value" id="opacity-value">100%</span>
+                            </div>
+                        </div>
+
+                        <div class="control-actions">
+                            <button class="btn btn--primary" id="save-try-on">Save Result</button>
+                            <button class="btn btn--secondary" id="new-photo">New Photo</button>
+                            <button class="btn btn--secondary" id="share-try-on">Share</button>
+                        </div>
+                    </div>
+
+                    <div class="try-on-canvas-container">
+                        <canvas id="try-on-canvas" class="try-on-canvas"></canvas>
+                        <div class="try-on-info">
+                            <p class="try-on-info__text">Click and drag jewelry to position • Use controls to adjust size and rotation</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 3: Size Comparison Tool -->
+            <section id="tab-compare" class="tab-content">
+                <div class="section-header">
+                    <h2 class="section-title">Size Comparison Tool</h2>
+                    <p class="section-description">Compare multiple jewelry pieces side-by-side with European paper standards and metric measurements.</p>
+                    <div style="background: var(--bg-secondary); padding: 1rem; border-radius: 8px; margin-top: 1rem; border-left: 4px solid var(--color-rose-gold);">
+                        <p style="margin: 0; font-size: 0.875rem; color: var(--text-secondary);">
+                            <strong>💡 How to use:</strong> Click on any box below to select jewelry items to compare. You can add up to 4 items at once.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Comparison Selection -->
+                <div class="compare-selection">
+                    <div class="compare-slot" data-slot="1">
+                        <div class="compare-slot__empty">
+                            <span class="compare-slot__icon">+</span>
+                            <span class="compare-slot__text">Click to Add Item 1</span>
+                        </div>
+                    </div>
+                    <div class="compare-slot" data-slot="2">
+                        <div class="compare-slot__empty">
+                            <span class="compare-slot__icon">+</span>
+                            <span class="compare-slot__text">Click to Add Item 2</span>
+                        </div>
+                    </div>
+                    <div class="compare-slot" data-slot="3">
+                        <div class="compare-slot__empty">
+                            <span class="compare-slot__icon">+</span>
+                            <span class="compare-slot__text">Click to Add Item 3</span>
+                        </div>
+                    </div>
+                    <div class="compare-slot" data-slot="4">
+                        <div class="compare-slot__empty">
+                            <span class="compare-slot__icon">+</span>
+                            <span class="compare-slot__text">Click to Add Item 4</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparison Display -->
+                <div class="comparison-display" id="comparison-display" style="display: none;">
+                    <div class="comparison-canvas-wrapper">
+                        <canvas id="comparison-canvas" class="comparison-canvas"></canvas>
+                    </div>
+
+                    <div class="comparison-table">
+                        <h3 class="comparison-table__title">Detailed Comparison</h3>
+                        <table class="specs-table" id="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Specification</th>
+                                    <th id="compare-header-1">Item 1</th>
+                                    <th id="compare-header-2">Item 2</th>
+                                    <th id="compare-header-3">Item 3</th>
+                                    <th id="compare-header-4">Item 4</th>
+                                </tr>
+                            </thead>
+                            <tbody id="comparison-tbody">
+                                <!-- Populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Size Reference Standards -->
+                    <div class="size-standards">
+                        <h4 class="size-standards__title">European Size Standards</h4>
+                        <div class="standards-grid">
+                            <div class="standard-card">
+                                <div class="standard-card__name">Credit Card</div>
+                                <div class="standard-card__size">85.6mm × 54mm</div>
+                                <div class="standard-card__size-imperial">(3.375" × 2.125")</div>
+                                <div class="standard-card__area">46.25 cm² (7.17 sq in)</div>
+                            </div>
+                            <div class="standard-card">
+                                <div class="standard-card__name">A5 Paper</div>
+                                <div class="standard-card__size">148mm × 210mm</div>
+                                <div class="standard-card__size-imperial">(5.8" × 8.3")</div>
+                                <div class="standard-card__area">310 cm² (48.15 sq in)</div>
+                            </div>
+                            <div class="standard-card">
+                                <div class="standard-card__name">A4 Paper</div>
+                                <div class="standard-card__size">210mm × 297mm</div>
+                                <div class="standard-card__size-imperial">(8.3" × 11.7")</div>
+                                <div class="standard-card__area">623 cm² (97.09 sq in)</div>
+                            </div>
+                            <div class="standard-card">
+                                <div class="standard-card__name">A3 Paper</div>
+                                <div class="standard-card__size">297mm × 420mm</div>
+                                <div class="standard-card__size-imperial">(11.7" × 16.5")</div>
+                                <div class="standard-card__area">1,245 cm² (193.05 sq in)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 4: Body Location & Anatomy Guide -->
+            <section id="tab-anatomy" class="tab-content">
+                <div class="section-header">
+                    <h2 class="section-title">Body Location & Anatomy Guide</h2>
+                    <p class="section-description">Professional recommendations for jewelry sizing based on anatomy and piercing location.</p>
+                    <p style="font-size: 0.875rem; color: var(--text-tertiary); margin-top: 1rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+                        <strong>⚕️ Professional Use Only:</strong> This guide provides anatomical information for professional tattoo or piercing professionals. All piercings shown require professional consultation and assessment. Anatomy varies significantly between individuals - sizes and suitability must be determined by a qualified piercer.
+                    </p>
+                </div>
+
+                <!-- Body Location Selector -->
+                <div class="anatomy-selector">
+                    <div class="anatomy-grid">
+                        <button class="anatomy-btn" data-location="ear">
+                            <span class="anatomy-btn__icon">👂</span>
+                            <span class="anatomy-btn__text">Ear</span>
+                        </button>
+                        <button class="anatomy-btn" data-location="nose">
+                            <span class="anatomy-btn__icon">👃</span>
+                            <span class="anatomy-btn__text">Nose</span>
+                        </button>
+                        <button class="anatomy-btn" data-location="lip">
+                            <span class="anatomy-btn__icon">👄</span>
+                            <span class="anatomy-btn__text">Lip</span>
+                        </button>
+                        <button class="anatomy-btn" data-location="tongue">
+                            <span class="anatomy-btn__icon">👅</span>
+                            <span class="anatomy-btn__text">Tongue</span>
+                        </button>
+                        <button class="anatomy-btn" data-location="eyebrow">
+                            <span class="anatomy-btn__icon">🤨</span>
+                            <span class="anatomy-btn__text">Eyebrow</span>
+                        </button>
+                        <button class="anatomy-btn" data-location="navel">
+                            <span class="anatomy-btn__icon">⭕</span>
+                            <span class="anatomy-btn__text">Navel</span>
+                        </button>
+                        <button class="anatomy-btn" data-location="nipple">
+                            <span class="anatomy-btn__icon">◉</span>
+                            <span class="anatomy-btn__text">Nipple</span>
+                        </button>
+                        <button class="anatomy-btn" data-location="surface">
+                            <span class="anatomy-btn__icon">📍</span>
+                            <span class="anatomy-btn__text">Surface</span>
+                        </button>
+                        <button class="anatomy-btn" data-location="male-genital">
+                            <span class="anatomy-btn__icon">♂️</span>
+                            <span class="anatomy-btn__text">Male Genital</span>
+                        </button>
+                        <button class="anatomy-btn" data-location="female-genital">
+                            <span class="anatomy-btn__icon">♀️</span>
+                            <span class="anatomy-btn__text">Female Genital</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Anatomy Details (populated when location selected) -->
+                <div class="anatomy-details" id="anatomy-details" style="display: none;">
+                    <div class="anatomy-details__diagram">
+                        <img id="anatomy-diagram" src="" alt="Anatomy diagram" class="anatomy-diagram">
+                        <div class="anatomy-details__measurements" id="anatomy-measurements">
+                            <!-- Measurement annotations will be added by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="anatomy-details__info">
+                        <h3 id="anatomy-title">Location Name</h3>
+                        <div class="anatomy-info-section">
+                            <h4>Recommended Jewelry Types</h4>
+                            <ul id="anatomy-jewelry-types" class="anatomy-list">
+                                <!-- Populated by JavaScript -->
+                            </ul>
+                        </div>
+                        <div class="anatomy-info-section">
+                            <h4>Standard Gauges</h4>
+                            <div id="anatomy-gauges" class="gauge-chips">
+                                <!-- Gauge chips populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="anatomy-info-section">
+                            <h4>Typical Sizes</h4>
+                            <table class="size-table" id="anatomy-size-table">
+                                <thead>
+                                    <tr>
+                                        <th>Piercing Type</th>
+                                        <th>Recommended Gauge</th>
+                                        <th>Typical Size</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="anatomy-sizes">
+                                    <!-- Sizes populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="anatomy-info-section">
+                            <h4>Healing & Sizing Notes</h4>
+                            <div id="anatomy-notes" class="anatomy-notes">
+                                <!-- Notes populated by JavaScript -->
+                            </div>
+                        </div>
+                        <div class="anatomy-info-section">
+                            <h4>Browse Compatible Jewelry</h4>
+                            <button class="btn btn--primary" id="browse-location-jewelry">View All Options</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 5: Style Selector -->
+            <section id="tab-styles" class="tab-content">
+                <div class="section-header">
+                    <h2 class="section-title">Style Selector</h2>
+                    <p class="section-description">Find your perfect jewelry style with our interactive style quiz and recommendations.</p>
+                </div>
+
+                <!-- Style Quiz -->
+                <div class="style-quiz" id="style-quiz">
+                    <div class="quiz-progress">
+                        <div class="quiz-progress__bar">
+                            
+                        </div>
+                        <span class="quiz-progress__text">Question <span id="quiz-current">1</span> of <span id="quiz-total">5</span></span>
+                    </div>
+
+                    <div class="quiz-content" id="quiz-content">
+                        <!-- Quiz questions will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Style Results -->
+                <div class="style-results" id="style-results" style="display: none;">
+                    <div class="style-results__header">
+                        <h3 class="style-results__title">Your Style Profile</h3>
+                        <div class="style-results__badge" id="style-badge">
+                            <span class="style-badge__icon">✨</span>
+                            <span class="style-badge__name" id="style-name">--</span>
+                        </div>
+                    </div>
+
+                    <div class="style-results__description" id="style-description">
+                        <!-- Style description populated by JavaScript -->
+                    </div>
+
+                    <div class="style-results__recommendations">
+                        <h4>Recommended Jewelry</h4>
+                        <div class="style-gallery" id="style-gallery">
+                            <!-- Recommended jewelry items populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <div class="style-results__actions">
+                        <button class="btn btn--primary" id="view-all-style">View All Matches</button>
+                        <button class="btn btn--secondary" id="retake-quiz">Retake Quiz</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab 6: Gauge Stretching Timeline -->
+            <section id="tab-stretching" class="tab-content">
+                <div class="section-header">
+                    <h2 class="section-title">Gauge Stretching Timeline Calculator</h2>
+                    <p class="section-description">Plan your safe stretching journey with personalized timelines and recommendations. All sizes in both imperial and metric.</p>
+                </div>
+
+                <!-- Stretching Calculator -->
+                <div class="stretching-calculator">
+                    <div class="calc-form">
+                        <div class="form-group">
+                            <label for="current-gauge" class="form-label">Current Gauge:</label>
+                            <select id="current-gauge" class="form-select">
+                                <option value="">Select current size</option>
+                                <option value="20g">20g (0.8mm)</option>
+                                <option value="18g">18g (1.0mm)</option>
+                                <option value="16g">16g (1.2mm)</option>
+                                <option value="14g">14g (1.6mm)</option>
+                                <option value="12g">12g (2.0mm)</option>
+                                <option value="10g">10g (2.4mm)</option>
+                                <option value="8g">8g (3.2mm)</option>
+                                <option value="6g">6g (4.0mm)</option>
+                                <option value="4g">4g (5.0mm)</option>
+                                <option value="2g">2g (6.0mm)</option>
+                                <option value="0g">0g (8.0mm)</option>
+                                <option value="00g">00g (10.0mm)</option>
+                                <option value="7/16">7/16" (11.0mm)</option>
+                                <option value="1/2">1/2" (12.7mm)</option>
+                                <option value="9/16">9/16" (14.3mm)</option>
+                                <option value="5/8">5/8" (15.9mm)</option>
+                                <option value="3/4">3/4" (19.1mm)</option>
+                                <option value="7/8">7/8" (22.2mm)</option>
+                                <option value="1">1" (25.4mm)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="goal-gauge" class="form-label">Goal Gauge:</label>
+                            <select id="goal-gauge" class="form-select">
+                                <option value="">Select goal size</option>
+                                <option value="20g">20g (0.8mm)</option>
+                                <option value="18g">18g (1.0mm)</option>
+                                <option value="16g">16g (1.2mm)</option>
+                                <option value="14g">14g (1.6mm)</option>
+                                <option value="12g">12g (2.0mm)</option>
+                                <option value="10g">10g (2.4mm)</option>
+                                <option value="8g">8g (3.2mm)</option>
+                                <option value="6g">6g (4.0mm)</option>
+                                <option value="4g">4g (5.0mm)</option>
+                                <option value="2g">2g (6.0mm)</option>
+                                <option value="0g">0g (8.0mm)</option>
+                                <option value="00g">00g (10.0mm)</option>
+                                <option value="7/16">7/16" (11.0mm)</option>
+                                <option value="1/2">1/2" (12.7mm)</option>
+                                <option value="9/16">9/16" (14.3mm)</option>
+                                <option value="5/8">5/8" (15.9mm)</option>
+                                <option value="3/4">3/4" (19.1mm)</option>
+                                <option value="7/8">7/8" (22.2mm)</option>
+                                <option value="1">1" (25.4mm)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="healing-speed" class="form-label">Healing Speed:</label>
+                            <select id="healing-speed" class="form-select">
+                                <option value="conservative">Conservative (6-8 weeks per size)</option>
+                                <option value="moderate" selected>Moderate (4-6 weeks per size)</option>
+                                <option value="aggressive">Aggressive (2-3 weeks per size) - Not Recommended</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn--primary btn--large" id="calculate-stretching">Calculate Timeline</button>
+                    </div>
+                </div>
+
+                <!-- Stretching Timeline Results -->
+                <div class="stretching-results" id="stretching-results" style="display: none;">
+                    <div class="timeline-summary">
+                        <h3 class="timeline-summary__title">Your Stretching Journey</h3>
+                        <div class="timeline-stats">
+                            <div class="stat-card">
+                                <div class="stat-card__value" id="total-steps">--</div>
+                                <div class="stat-card__label">Total Steps</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card__value" id="total-time">--</div>
+                                <div class="stat-card__label">Estimated Time</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-card__value" id="size-increase">--</div>
+                                <div class="stat-card__label">Size Increase</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Visualization -->
+                    <div class="timeline-visual">
+                        <div class="timeline-track" id="timeline-track">
+                            <!-- Timeline nodes populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Step-by-Step Guide -->
+                    <div class="stretching-guide">
+                        <h4 class="stretching-guide__title">Step-by-Step Guide</h4>
+                        <div class="steps-container" id="steps-container">
+                            <!-- Steps populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Safety Warnings -->
+                    <div class="safety-warnings">
+                        <h4 class="safety-warnings__title">⚠️ Important Safety Guidelines</h4>
+                        <ul class="safety-list">
+                            <li><strong>Never force jewelry:</strong> If there's resistance, pain, or bleeding, stop immediately</li>
+                            <li><strong>Wait for complete healing:</strong> Minimum 4 weeks between stretches, longer for larger gauges</li>
+                            <li><strong>Use proper tools:</strong> Glass or steel single-flare plugs, never tapers alone</li>
+                            <li><strong>Massage daily:</strong> Use vitamin E oil or jojoba oil to improve elasticity</li>
+                            <li><strong>Downsize if needed:</strong> Thinning tissue, pain, or "cheese-cutting" requires downsizing</li>
+                            <li><strong>Professional consultation:</strong> See a piercer if you experience complications</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    
+
+<!-- Related Tools Section -->
+<section class="related-tools-section" style="padding: 2rem 1rem; background: #fff; border-top: 1px solid #eee;">
+    <div style="max-width: 800px; margin: 0 auto;">
+        <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: #1e293b;">Recommended for You</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+            <a href="https://poliinternational.com/gauge-converter/" style="display: block; padding: 1rem; background: #f1f5f9; border-radius: 8px; text-decoration: none; color: #0693e3; font-weight: 500; text-align: center; transition: background 0.2s;">Gauge Converter</a>
+            <a href="https://poliinternational.com/healing-tracker/" style="display: block; padding: 1rem; background: #f1f5f9; border-radius: 8px; text-decoration: none; color: #0693e3; font-weight: 500; text-align: center; transition: background 0.2s;">Healing Tracker</a>
+            <a href="https://poliinternational.com/material-certification/" style="display: block; padding: 1rem; background: #f1f5f9; border-radius: 8px; text-decoration: none; color: #0693e3; font-weight: 500; text-align: center; transition: background 0.2s;">Material Certification</a>
+        </div>
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <a href="https://poliinternational.com/tools/" style="color: #64748b; text-decoration: underline; font-size: 0.9rem;">View All 17 Free Tools</a>
+        </div>
+    </div>
+</section>
+
+<!-- GEO Semantic Block -->
+<aside class="geo-summary-block" style="background: #f8fafc; border-left: 4px solid #0693e3; padding: 1.5rem; margin: 2rem 0; font-style: italic; color: #334155; border-radius: 0 8px 8px 0;">
+    <p style="margin: 0; line-height: 1.6;">Expert Safety Advisory: Precision in gauge and material selection is critical for bio-compatibility. Our tools utilize industry-standard AWG and ASTM mappings to protect client health and ensure procedural success in every session.</p>
+</aside>
+
+</main>
+
+    <!-- Calibration Modal -->
+    <div class="modal" id="calibration-modal" style="display: none;">
+        
+        <div class="modal__content">
+            <div class="modal__header">
+                <h3 class="modal__title">Screen Calibration</h3>
+                <button class="modal__close" id="modal-close">✕</button>
+            </div>
+            <div class="modal__body">
+                <p class="modal__description">
+                    To display jewelry at true 1:1 scale, we need to calibrate your screen's pixel density (PPI).
+                    Please use a physical ruler or credit card to measure the reference below.
+                </p>
+
+                <div class="calibration-method">
+                    <h4>Method 1: Credit Card</h4>
+                    <p>Place a credit card on your screen and adjust the slider until it matches perfectly.</p>
+                    <div class="calibration-card" id="calibration-card">
+                        <div class="card-mockup">
+                            
+                            <div class="card-mockup__text">CREDIT CARD</div>
+                            <div class="card-mockup__size">85.6mm × 54mm</div>
+                        </div>
+                    </div>
+                    <div class="calibration-slider">
+                        <label>Adjust size:</label>
+                        <input type="range" id="card-calibration-slider" min="50" max="200" value="100">
+                        <span id="card-size-display">85.6mm</span>
+                    </div>
+                </div>
+
+                <div class="calibration-method">
+                    <h4>Method 2: Ruler</h4>
+                    <p>Measure the ruler below and adjust until it shows exactly 100mm (10cm).</p>
+                    <div class="calibration-ruler" id="calibration-ruler-display">
+                        <svg width="100%" height="60" id="ruler-svg">
+                            <!-- Ruler will be drawn by JavaScript -->
+                        </svg>
+                    </div>
+                    <div class="calibration-slider">
+                        <label>Adjust size:</label>
+                        <input type="range" id="ruler-calibration-slider" min="50" max="200" value="100">
+                        <span id="ruler-size-display">100mm</span>
+                    </div>
+                </div>
+
+                <div class="calibration-auto">
+                    <h4>Or Use Auto-Detection</h4>
+                    <p>We'll estimate your screen's PPI based on your device specifications.</p>
+                    <button class="btn btn--secondary" id="auto-detect-ppi">Auto-Detect PPI</button>
+                    <p class="calibration-auto__result" id="auto-detect-result"></p>
+                </div>
+            </div>
+            <div class="modal__footer">
+                <button class="btn btn--primary" id="save-calibration">Save Calibration</button>
+                <button class="btn btn--secondary" id="skip-calibration">Skip for Now</button>
+            </div>
+        </div>
+    </div>
+
+        <!-- MORE TOOLS NAVIGATION -->
+    <section class="jewelry-viz__more-tools">
+        <div class="jewelry-viz__container" style="text-align: center; padding: 2rem 1rem;">
+            <p style="font-size: 1.05rem; margin: 0; color: #666;">
+                <a href="https://poliinternational.com/tools" target="_blank" rel="noopener" style="color: #0693e3; text-decoration: none; font-weight: 600; transition: color 0.2s;">
+                    Explore all our free professional tools →
+                </a>
+            </p>
+        </div>
+    </section>
+
+
+    <!-- Community Feedback Section -->
+    <section class="community-feedback">
+        <div class="container">
+            <div class="feedback-card">
+                <div class="feedback-header">
+                    <h2 class="feedback-title">💬 Help Us Build Better Tools, Friend!</h2>
+                    <p class="feedback-subtitle">
+                        Hey there, fellow body art enthusiast! Whether you're a professional tattooist, piercer, or someone who loves body art as much as we do – we're all in this together.
+                        Our passion doesn't get much support out there, so let's stick together and build the best tools to help our community thrive!
+                    </p>
+                    <p class="feedback-callout">
+                        <strong>Your feedback matters!</strong> Found something useful? Got ideas for improvements? We're all ears!
+                        Help us make this tool even better for everyone in our body art family.
+                    </p>
+                </div>
+
+                <form class="feedback-form" id="feedbackForm">
+                    <div class="feedback-form-grid">
+                        <div class="form-group">
+                            <label for="userEmail" class="form-label">Your Email (so we can reply!)</label>
+                            <input type="email" id="userEmail" name="userEmail" class="form-input"
+                                   placeholder="your.email@example.com" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="userRole" class="form-label">You are a...</label>
+                            <select id="userRole" name="userRole" class="form-select" required>
+                                <option value="">Choose one</option>
+                                <option value="tattoo_artist">Tattoo Artist</option>
+                                <option value="piercer">Professional Piercer</option>
+                                <option value="shop_owner">Shop Owner</option>
+                                <option value="apprentice">Apprentice</option>
+                                <option value="enthusiast">Body Art Enthusiast/Customer</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="feedbackText" class="form-label">Share Your Thoughts, Ideas, or Suggestions</label>
+                        <textarea id="feedbackText" name="feedbackText" class="form-textarea"
+                                  placeholder="What do you love? What could be better? Any features you'd like to see? We genuinely want to hear from you!"
+                                  rows="5" required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="feedback-submit-btn">
+                            <span class="btn-icon">✉️</span>
+                            <span class="btn-text">Send Feedback</span>
+                        </button>
+                    </div>
+
+                    <!-- Success/Error Messages -->
+                    <div class="feedback-message feedback-message--success" id="feedbackSuccess" style="display: none;">
+                        <strong>🎉 Thank you, friend!</strong> Your feedback has been sent. We'll read it carefully and get back to you soon!
+                    </div>
+                    <div class="feedback-message feedback-message--error" id="feedbackError" style="display: none;">
+                        <strong>😔 Oops!</strong> Something went wrong. Please try again or email us directly at patrick@poli-international.com
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- EMAIL CAPTURE SECTION -->
+    <section class="email-section">
+        <div class="container">
+            <div class="email-box">
+                <h2 class="email-title">🔔 Get Notified of New Tools!</h2>
+                <p class="email-subtitle">Be first to know when we launch new free tools for piercing and tattoo professionals.</p>
+
+                <form id="footer-email-form" class="email-form" data-location="footer">
+                    <div class="email-input-group">
+                        <input type="email"
+                               id="footer-email-input"
+                               class="email-input"
+                               placeholder="Your email address"
+                               required
+                               aria-label="Email address">
+                        <button type="submit" class="email-submit">Notify Me</button>
+                    </div>
+                    <p class="email-success" id="footer-email-success" style="display: none;">
+                        ✅ Thanks! We'll notify you when new tools launch!
+                    </p>
+                    <p class="email-error" id="footer-email-error" style="display: none;">
+                        ❌ Please enter a valid email address.
+                    </p>
+                    <div class="email-trust">
+                        <span>✅ Free tool updates only</span>
+                        <span>✅ No spam</span>
+                        <span>✅ Unsubscribe anytime</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__brand">
+                    
+                    <p class="footer__tagline">Professional Body Piercing Jewelry & Tools</p>
+                </div>
+                <div class="footer__links">
+                    <h4 class="footer__heading">Professional Tools</h4>
+                    <ul class="footer__list">
+                        <li><a href="../gauge-converter/index.html">Gauge Converter</a></li>
+                        <li><a href="../needle-selector/index.html">Needle Selector</a></li>
+                        <li><a href="../material-certification/index.html">Material Certification</a></li>
+                        <li><a href="../autoclave-calculator/index.html">Autoclave Calculator</a></li>
+                        <li><a href="../equipment-compatibility/index.html">Equipment Compatibility</a></li>
+                        <li><a href="../coverage-calculator/index.html">Coverage Calculator</a></li>
+                        <li><a href="index.html">Jewelry Size Visualizer</a></li>
+                    </ul>
+                </div>
+                <div class="footer__links">
+                    <h4 class="footer__heading">More Tools</h4>
+                    <ul class="footer__list">
+                        <li><a href="../ink-mixer/index.html">Ink Color Mixer</a></li>
+                        <li><a href="../healing-tracker/index.html">Healing Tracker</a></li>
+                        <li><a href="../pain-guide/index.html">Pain Guide</a></li>
+                        <li><a href="../piercing-angle-guide/index.html">Piercing Angle Guide</a></li>
+                        <li><a href="../stencil-calculator/index.html">Stencil Calculator</a></li>
+                        <li><a href="../touch-up-timeline/index.html">Touch-up Timeline</a></li>
+                    </ul>
+                </div>
+                <div class="footer__disclaimer">
+                    <h4 class="footer__heading">Medical Disclaimer</h4>
+                    <p class="footer__text">
+                        This tool provides general size information only and is not a substitute for professional piercing advice.
+                        Always consult a tattoo or piercing professional for proper jewelry sizing and fitting. Individual anatomy varies significantly.
+                        Poli International is not responsible for jewelry selection or sizing decisions made using this tool.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Buy me a Coffee Button -->
+            <div class="footer__support">
+                <a href='https://ko-fi.com/C0C81NEXBV' target='_blank' class="footer__kofi">
+                    <img src='https://storage.ko-fi.com/cdn/kofi6.png?v=6'
+                         border='0' alt='Buy Me a Coffee at ko-fi.com'
+                         class="footer__kofi-img" />
+                </a>
+            </div>
+
+            <div class="footer__bottom">
+                <p>&copy; 2025 Poli International Co. All rights reserved. | <a href="../../privacy.html">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/database.js"></script>
+    <script src="js/calibration.js"></script>
+    <script src="js/visualizer.js"></script>
+    <script src="js/try-on.js"></script>
+    <script src="js/comparison.js"></script>
+    <script src="js/anatomy.js"></script>
+    <script src="js/styles.js"></script>
+    <script src="js/stretching.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/feedback.js"></script>
+
+    
+
+    
+
+    
+
+<!-- AUTOMATIC IFRAME CONTENT HIDER (ADDED BY ANTIGRAVITY) -->
+<script>
+    if (window.self !== window.top) {
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectors = ['.breadcrumb-nav', '.site-header', '.site-footer', '.equip-checker__header', 
+                '.equip-checker__footer', '.tool-title-section', '.more-tools-section',
+                '.feedback-section', '.related-tools-section', '.geo-summary-block',
+                '.needle-selector__header', '.needle-selector__footer', 
+                '.needle-selector__more-tools', '.community-feedback',
+                '.poli-footer', '.share-card', '.need-support-card', '.explore-all-card'];
+            selectors.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => el.style.display = 'none');
+            });
+            // Force reset body margins for embed
+            document.body.style.paddingTop = '0';
+            document.body.style.marginTop = '0';
+            document.body.style.paddingBottom = '0';
+            document.body.style.marginBottom = '0';
+            
+            
+/* Center align tool headers when in iframe */
+if (window.self !== window.top) {
+    const style = document.createElement('style');
+    style.textContent = `
+        /* Center the entire header section */
+        [class*="__header-content"],
+        [class*="__title-group"],
+        [class*="__header-buttons"] {
+            text-align: center !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
+
+        /* Center H2 headings */
+        [class*="__header"] h2,
+        [class*="__title-group"] h2,
+        header h2 {
+            text-align: center !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
+        /* Center subtitles/descriptions */
+        [class*="__subtitle"],
+        [class*="__header"] p {
+            text-align: center !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+        }
+
+        /* Center button containers */
+        [class*="__header-buttons"] {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+        }
+    `;
+    document.head.appendChild(style);
+}
+        });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jewelry Size Visualizer Widget | Poli International</title>
+    <style>
+        /* Embeddable Widget Styles - Tool #7 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Light mode colors */
+            --bg-primary: #FAFAFA;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #F5F5F5;
+            --text-primary: #1F2937;
+            --text-secondary: #374151;
+            --text-tertiary: #6B7280;
+            --border-color: #D1D5DB;
+        }
+
+        [data-theme="dark"] {
+            /* Dark mode colors */
+            --bg-primary: #0F172A;
+            --bg-secondary: #1E293B;
+            --bg-tertiary: #334155;
+            --text-primary: #F1F5F9;
+            --text-secondary: #E2E8F0;
+            --text-tertiary: #CBD5E1;
+            --border-color: #475569;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .widget {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background-color 0.3s;
+        }
+
+        .kofi-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: #FF5E5B;
+            color: white;
+            border: none;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-right: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .kofi-button:hover {
+            background: #FF4E4B;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .kofi-icon {
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        .kofi-text {
+            white-space: nowrap;
+        }
+
+        .dark-mode-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-tertiary);
+            border: 2px solid var(--border-color);
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.25s;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .dark-mode-toggle:hover {
+            border-color: #B76E79;
+            background: #B76E79;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .widget__header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #B76E79;
+        }
+
+        .widget__title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #B76E79, #0EA5E9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .widget__subtitle {
+            font-size: 0.875rem;
+            color: var(--text-tertiary);
+        }
+
+        .widget__form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .form-select {
+            padding: 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: #B76E79;
+        }
+
+        .btn {
+            padding: 0.875rem 1.5rem;
+            background: linear-gradient(135deg, #B76E79, #9A5860);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(183, 110, 121, 0.3);
+        }
+
+        .widget__result {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: none;
+            transition: background-color 0.3s;
+        }
+
+        .widget__result.visible {
+            display: block;
+        }
+
+        .result__canvas-container {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            border: 3px solid #C0C0C0;
+            transition: background-color 0.3s;
+        }
+
+        .result__canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .result__info {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .result__title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #B76E79;
+            margin-bottom: 0.75rem;
+        }
+
+        .result__specs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .result__spec {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .result__spec:last-child {
+            border-bottom: none;
+        }
+
+        .spec-label {
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .spec-value {
+            color: var(--text-tertiary);
+        }
+
+        .result__comparisons {
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .result__comparisons h4 {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #0EA5E9;
+            margin-bottom: 0.75rem;
+        }
+
+        .result__comparisons ul {
+            list-style: none;
+            padding: 0;
+            font-size: 0.8125rem;
+            color: var(--text-tertiary);
+        }
+
+        .result__comparisons li {
+            padding: 0.375rem 0;
+        }
+
+        .widget__footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #E5E7EB;
+            font-size: 0.75rem;
+            color: #9CA3AF;
+        }
+
+        .widget__footer a {
+            color: #0EA5E9;
+            text-decoration: none;
+        }
+
+        .calibration-note {
+            background: #FEF3C7;
+            border: 2px solid #F59E0B;
+            border-radius: 8px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            font-size: 0.8125rem;
+            color: #78350F;
+        }
+
+        @media (max-width: 480px) {
+            .widget {
+                padding: 1rem;
+            }
+
+            .widget__title {
+                font-size: 1.25rem;
+            }
+        }
+        .embed__email-section{background:linear-gradient(135deg,#3B82F6 0%,#8B5CF6 100%);padding:2rem 1rem;margin:2rem 0;border-radius:8px}
+        .embed__email-box{max-width:500px;margin:0 auto;text-align:center}
+        .embed__email-title{font-size:1.3rem;font-weight:700;color:#FFF;margin-bottom:0.5rem}
+        .embed__email-subtitle{font-size:0.9rem;color:rgba(255,255,255,0.9);margin-bottom:1rem}
+        .embed__email-input-group{display:flex;gap:0.5rem;margin-bottom:0.75rem}
+        .embed__email-input{flex:1;padding:0.75rem;border:2px solid rgba(255,255,255,0.3);border-radius:6px;background:rgba(255,255,255,0.95);color:#1A1A1A;font-size:0.9rem}
+        .embed__email-input:focus{outline:none;border-color:#FFF;background:#FFF}
+        .embed__email-submit{padding:0.75rem 1.5rem;background:#8B5CF6;color:#FFF;border:none;border-radius:6px;font-weight:600;cursor:pointer;transition:all 0.3s ease;font-size:0.9rem}
+        .embed__email-submit:hover{background:#7C3AED;transform:translateY(-2px)}
+        .embed__email-success,.embed__email-error{padding:0.5rem;border-radius:6px;font-size:0.85rem;margin-top:0.5rem}
+        .embed__email-success{background:rgba(40,167,69,0.2);color:#FFF;border:1px solid rgba(40,167,69,0.5)}
+        .embed__email-error{background:rgba(220,53,69,0.2);color:#FFF;border:1px solid rgba(220,53,69,0.5)}
+        .embed__email-trust{display:flex;justify-content:center;gap:1rem;font-size:0.75rem;color:rgba(255,255,255,0.8);flex-wrap:wrap}
+        .embed__features-section{background:#F8F8F8;padding:2rem 1rem;margin:2rem 0;border-radius:8px;border:2px solid #E0E0E0}
+        .embed__features-title{font-size:1.3rem;font-weight:700;color:#8B5CF6;margin-bottom:1rem;text-align:center}
+        .embed__features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0.75rem;max-width:600px;margin:0 auto}
+        .embed__feature-item{display:flex;align-items:center;gap:0.5rem;padding:0.75rem;background:#FFF;border-radius:6px;font-size:0.9rem;border:1px solid #E8E8E8}
+        .embed__feature-check{color:#28A745;font-size:1.1rem;font-weight:700}
+        .embed__feature-text{color:#333}
+        @media (max-width:600px){.embed__email-input-group{flex-direction:column}.embed__features-grid{grid-template-columns:1fr}}
+    </style>
+</head>
+<body>
+    <div class="widget">
+        <a href='https://ko-fi.com/C0C81NEXBV' target='_blank' class="kofi-button">
+            <span class="kofi-icon">☕</span>
+            <span class="kofi-text">Buy Me a Coffee</span>
+        </a>
+        <button class="dark-mode-toggle" id="dark-mode-toggle">
+            <span id="dark-mode-icon">🌙</span>
+            <span id="dark-mode-text">Dark Mode</span>
+        </button>
+
+        <div class="widget__header">
+            <h1 class="widget__title">Jewelry Size Visualizer</h1>
+            <p class="widget__subtitle">View jewelry at true 1:1 scale • Imperial & Metric</p>
+        </div>
+
+        <div class="calibration-note">
+            ⚠️ <strong>Note:</strong> For accurate 1:1 scale display, results are calibrated to your screen. Measurements shown in both imperial and metric units per European standards.
+        </div>
+
+        <div class="widget__form">
+            <div class="form-group">
+                <label for="embed-category" class="form-label">Jewelry Type:</label>
+                <select id="embed-category" class="form-select">
+                    <option value="">Select Type</option>
+                    <option value="rings">Rings</option>
+                    <option value="labrets">Labrets & Studs</option>
+                    <option value="barbells">Barbells</option>
+                    <option value="circular">Circular Barbells</option>
+                    <option value="captive">Ball Closure Rings (BCR)</option>
+                    <option value="clickers">Clickers</option>
+                    <option value="plugs">Plugs & Tunnels</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="embed-gauge" class="form-label">Gauge:</label>
+                <select id="embed-gauge" class="form-select">
+                    <option value="">Select Gauge</option>
+                    <option value="20g">20g (0.8mm)</option>
+                    <option value="18g">18g (1.0mm)</option>
+                    <option value="16g">16g (1.2mm)</option>
+                    <option value="14g">14g (1.6mm)</option>
+                    <option value="12g">12g (2.0mm)</option>
+                    <option value="10g">10g (2.4mm)</option>
+                    <option value="8g">8g (3.2mm)</option>
+                    <option value="6g">6g (4.0mm)</option>
+                    <option value="4g">4g (5.0mm)</option>
+                    <option value="2g">2g (6.0mm)</option>
+                    <option value="0g">0g (8.0mm)</option>
+                    <option value="00g">00g (10.0mm)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="embed-location" class="form-label">Body Location:</label>
+                <select id="embed-location" class="form-select">
+                    <option value="">Select Location</option>
+                    <option value="ear">Ear</option>
+                    <option value="nose">Nose</option>
+                    <option value="lip">Lip</option>
+                    <option value="tongue">Tongue</option>
+                    <option value="eyebrow">Eyebrow</option>
+                    <option value="navel">Navel</option>
+                    <option value="nipple">Nipple</option>
+                </select>
+            </div>
+
+            <button class="btn" id="embed-visualize-btn">Visualize Jewelry</button>
+        </div>
+
+        <div class="widget__result" id="embed-result">
+            <div class="result__canvas-container">
+                <canvas id="embed-canvas" width="300" height="300" class="result__canvas"></canvas>
+            </div>
+
+            <div class="result__info">
+                <h3 class="result__title" id="result-name">Jewelry Name</h3>
+                <div class="result__specs">
+                    <div class="result__spec">
+                        <span class="spec-label">Gauge:</span>
+                        <span class="spec-value" id="result-gauge">--</span>
+                    </div>
+                    <div class="result__spec">
+                        <span class="spec-label">Size:</span>
+                        <span class="spec-value" id="result-size">--</span>
+                    </div>
+                    <div class="result__spec">
+                        <span class="spec-label">Material:</span>
+                        <span class="spec-value" id="result-material">--</span>
+                    </div>
+                </div>
+
+                <div class="result__comparisons">
+                    <h4>Size Comparisons (European Standards)</h4>
+                    <ul id="result-comparisons">
+                        <!-- Populated by JavaScript -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="widget__footer">
+            Powered by <a href="https://www.poliinternational.com" target="_blank">Poli International</a> •
+            <a href="../index.html" target="_blank">Full Tool</a>
+        </div>
+    </div>
+
+    <section class="embed__email-section">
+        <div class="embed__email-box">
+            <h2 class="embed__email-title">🔔 Get Notified of New Tools!</h2>
+            <p class="embed__email-subtitle">Be first to know when we launch new free tools for piercing professionals.</p>
+            <form id="embed-email-form"><div class="embed__email-input-group">
+                <input type="email" id="embed-email-input" class="embed__email-input" placeholder="Your email address" required>
+                <button type="submit" class="embed__email-submit">Notify Me</button>
+            </div>
+            <p class="embed__email-success" id="embed-email-success" style="display:none">✅ Thanks! We'll notify you when new tools launch!</p>
+            <p class="embed__email-error" id="embed-email-error" style="display:none">❌ Please enter a valid email address.</p>
+            <div class="embed__email-trust"><span>✅ Free tool updates only</span><span>✅ No spam</span><span>✅ Unsubscribe anytime</span></div>
+            </form>
+        </div>
+    </section>
+
+    <section class="embed__features-section">
+        <h2 class="embed__features-title">✨ Tool Features</h2>
+        <div class="embed__features-grid">
+            <div class="embed__feature-item"><span class="embed__feature-check">✅</span><span class="embed__feature-text">1:1 Scale Visualization</span></div>
+            <div class="embed__feature-item"><span class="embed__feature-check">✅</span><span class="embed__feature-text">Virtual Try-On</span></div>
+            <div class="embed__feature-item"><span class="embed__feature-check">✅</span><span class="embed__feature-text">Size Comparisons</span></div>
+            <div class="embed__feature-item"><span class="embed__feature-check">✅</span><span class="embed__feature-text">Fitting Recommendations</span></div>
+            <div class="embed__feature-item"><span class="embed__feature-check">✅</span><span class="embed__feature-text">Mobile-Responsive Design</span></div>
+            <div class="embed__feature-item"><span class="embed__feature-check">✅</span><span class="embed__feature-text">Dark/Light Mode</span></div>
+            <div class="embed__feature-item"><span class="embed__feature-check">✅</span><span class="embed__feature-text">100% Free, No Ads</span></div>
+            <div class="embed__feature-item"><span class="embed__feature-check">✅</span><span class="embed__feature-text">Professional Results</span></div>
+        </div>
+    </section>
+
+    <footer class="embed-footer">
+        <div class="embed-footer-content">
+            <a href="https://poliinternational.com/tools" target="_blank" class="embed-footer-btn embed-footer-btn--tools">
+                <span class="btn-icon">🔧</span>
+                <span class="btn-text">More Tools</span>
+            </a>
+            <a href='https://ko-fi.com/C0C81NEXBV' target='_blank' class="embed-footer-btn embed-footer-btn--support">
+                <span class="btn-icon">☕</span>
+                <span class="btn-text">Support Us</span>
+            </a>
+            <a href="index.html" target="_blank" class="embed-footer-link">
+                Open Full Version →
+            </a>
+        </div>
+    </footer>
+
+    <script src="js/database.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Dark Mode for Embed Widget
+        const initDarkMode = () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateDarkModeButton(savedTheme);
+
+            const toggleBtn = document.getElementById('dark-mode-toggle');
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', () => {
+                    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                    document.documentElement.setAttribute('data-theme', newTheme);
+                    localStorage.setItem('theme', newTheme);
+                    updateDarkModeButton(newTheme);
+                });
+            }
+        };
+
+        const updateDarkModeButton = (theme) => {
+            const icon = document.getElementById('dark-mode-icon');
+            const text = document.getElementById('dark-mode-text');
+            if (icon && text) {
+                if (theme === 'dark') {
+                    icon.textContent = '☀️';
+                    text.textContent = 'Light Mode';
+                } else {
+                    icon.textContent = '🌙';
+                    text.textContent = 'Dark Mode';
+                }
+            }
+        };
+
+        // Embed-specific JavaScript
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize dark mode
+            initDarkMode();
+            const visualizeBtn = document.getElementById('embed-visualize-btn');
+            const result = document.getElementById('embed-result');
+            const canvas = document.getElementById('embed-canvas');
+
+            visualizeBtn.addEventListener('click', () => {
+                const category = document.getElementById('embed-category').value;
+                const gauge = document.getElementById('embed-gauge').value;
+                const location = document.getElementById('embed-location').value;
+
+                if (!category || !gauge || !location) {
+                    alert('Please select all options');
+                    return;
+                }
+
+                // Filter jewelry
+                const matches = filterJewelry({ category, gauge, location });
+
+                if (matches.length === 0) {
+                    alert('No jewelry found matching your criteria. Try different options.');
+                    return;
+                }
+
+                // Use first match
+                const jewelry = matches[0];
+
+                // Display result
+                displayJewelry(jewelry);
+            });
+
+            function displayJewelry(item) {
+                // Show result
+                result.classList.add('visible');
+
+                // Set name
+                document.getElementById('result-name').textContent = item.name;
+
+                // Set specs
+                const gaugeMM = (ScaleRenderer.gaugeToInches(item.gauge) * 25.4).toFixed(1);
+                document.getElementById('result-gauge').textContent = `${item.gauge} (${gaugeMM}mm)`;
+
+                if (item.diameter) {
+                    const diameterMM = (item.diameter * 25.4).toFixed(1);
+                    document.getElementById('result-size').textContent =
+                        `Ø ${item.diameter}" (${diameterMM}mm)`;
+                } else if (item.length) {
+                    const lengthMM = (item.length * 25.4).toFixed(1);
+                    document.getElementById('result-size').textContent =
+                        `L ${item.length}" (${lengthMM}mm)`;
+                }
+
+                document.getElementById('result-material').textContent = item.material;
+
+                // Render on canvas
+                canvas.width = 300;
+                canvas.height = 300;
+                ScaleRenderer.renderJewelry(canvas, item, {
+                    showLabels: true,
+                    showRuler: false
+                });
+
+                // Generate size comparisons
+                let area = 0;
+                if (item.diameter) {
+                    area = Math.PI * Math.pow(item.diameter / 2, 2);
+                } else if (item.length) {
+                    area = item.length * ScaleRenderer.gaugeToInches(item.gauge);
+                } else {
+                    area = 0.05;
+                }
+
+                const comparisons = MeasurementStandards.generateSizeComparisons(area);
+                const compList = document.getElementById('result-comparisons');
+                compList.innerHTML = comparisons.map(comp =>
+                    `<li>${comp.ratio}× ${comp.name} (${comp.size})</li>`
+                ).join('');
+
+                // Scroll to result
+                result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        });
+    </script>
+</body>
+</html>
