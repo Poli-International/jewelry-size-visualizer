@@ -406,37 +406,13 @@ a:hover {
     background: linear-gradient(135deg, #FFA500, #FFD700);
 }
 
-/* Ko-fi Button */
-.header__kofi-button {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    background: #FF5E5B;
-    color: white;
-    border: none;
-    border-radius: var(--border-radius-full);
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all var(--transition-base);
-    font-size: var(--font-size-sm);
-    text-decoration: none;
-}
+/
 
-.header__kofi-button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-    background: #FF4E4B;
-}
 
-.kofi-icon {
-    font-size: 1.1rem;
-    line-height: 1;
-}
 
-.kofi-text {
-    white-space: nowrap;
-}
+
+
+
 
 /* Dark Mode Toggle */
 .dark-mode-toggle {
@@ -2223,36 +2199,13 @@ a:hover {
     margin: var(--spacing-xl) 0;
 }
 
-.footer__kofi {
-    display: inline-block;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-    opacity: 0.95;
-}
 
-.footer__kofi:hover {
-    transform: translateY(-3px) scale(1.08);
-    opacity: 1;
-}
 
-.footer__kofi-img {
-    display: block;
-    height: 70px;
-    width: auto;
-    border: 0;
-    border-radius: var(--border-radius-md);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-    transition: all 0.3s ease;
-}
 
-.footer__kofi:hover .footer__kofi-img {
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-}
 
-@media (min-width: 768px) {
-    .footer__kofi-img {
-        height: 80px;
-    }
-}
+
+
+
 
 .footer__bottom {
     text-align: center;
