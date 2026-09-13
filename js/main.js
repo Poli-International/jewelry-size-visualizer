@@ -46,6 +46,10 @@ const MeasurementStandards = {
      * @returns {string} Formatted measurement
      */
     formatMeasurement(imperial, unit) {
+        // Guard against NaN, negative, null, undefined
+        if (typeof imperial !== 'number' || isNaN(imperial) || imperial < 0) {
+            return 'Invalid measurement';
+        }
         let metric, metricUnit;
 
         switch(unit) {
@@ -203,13 +207,23 @@ const ScaleRenderer = {
                 this.renderCircularBarbell(ctx, jewelry);
                 break;
             case 'barbells':
-                this.renderBarbell(ctx, jewelry);
+                if (this.isSurfaceBar(jewelry)) {
+                    this.renderSurfaceBar(ctx, jewelry);
+                } else if (this.isCurvedBarbell(jewelry)) {
+                    this.renderCurvedBarbell(ctx, jewelry);
+                } else {
+                    this.renderBarbell(ctx, jewelry);
+                }
                 break;
             case 'labrets':
                 this.renderLabret(ctx, jewelry);
                 break;
             case 'plugs':
-                this.renderPlug(ctx, jewelry);
+                if (this.isTunnel(jewelry)) {
+                    this.renderTunnel(ctx, jewelry);
+                } else {
+                    this.renderPlug(ctx, jewelry);
+                }
                 break;
             default:
                 this.renderGenericJewelry(ctx, jewelry);
@@ -327,6 +341,108 @@ const ScaleRenderer = {
         // Bottom ball
         ctx.beginPath();
         ctx.arc(0, length / 2, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+    },
+
+    /**
+     * Curved barbells (eyebrow, navel, rook) share category 'barbells' with
+     * straight bars, so detect them from the item name/id.
+     */
+    isCurvedBarbell(jewelry) {
+        return /curved|navel|rook|banana/i.test((jewelry.name || '') + ' ' + (jewelry.id || ''));
+    },
+
+    /**
+     * Render curved barbell - gently arced bar with a ball on each end.
+     * Endpoints stay length apart (the wearable length), bar bows to one side.
+     */
+    renderCurvedBarbell(ctx, jewelry) {
+        const lengthInches = jewelry.length || 0.5;
+        const gaugeInches = this.gaugeToInches(jewelry.gauge);
+        const ballSize = jewelry.ballSize || 0.125;
+
+        const length = this.inchesToPixels(lengthInches);
+        const thickness = this.inchesToPixels(gaugeInches);
+        const ballRadius = this.inchesToPixels(ballSize / 2);
+
+        const color = this.getJewelryColor(jewelry.material);
+
+        // Circle through both ball centers (0, -L/2) and (0, L/2), bulging right
+        const offset = length * 0.6;
+        const radius = Math.sqrt(offset * offset + (length / 2) * (length / 2));
+        const startAngle = Math.atan2(-length / 2, offset);
+        const endAngle = Math.atan2(length / 2, offset);
+
+        ctx.beginPath();
+        ctx.arc(-offset, 0, radius, startAngle, endAngle);
+        ctx.lineWidth = thickness;
+        ctx.strokeStyle = color;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        // Top ball
+        ctx.beginPath();
+        ctx.arc(0, -length / 2, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+
+        // Bottom ball (slightly larger on navel bananabells with a gem)
+        ctx.beginPath();
+        ctx.arc(0, length / 2, jewelry.hasGem ? ballRadius * 1.25 : ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = jewelry.hasGem ? '#0EA5E9' : color;
+        ctx.fill();
+    },
+
+    /**
+     * Surface bars share category 'barbells' but have a distinctive 'staple'
+     * shape: a flat bar sitting under the skin with two 90-degree bent risers,
+     * a ball on top of each. Detect from the item name/id.
+     */
+    isSurfaceBar(jewelry) {
+        return /surface/i.test((jewelry.name || '') + ' ' + (jewelry.id || ''));
+    },
+
+    /**
+     * Render surface bar - staple shape. The straight span (jewelry.length) runs
+     * vertically like the flat bar under the skin; both ends bend 90 degrees to
+     * the same side into short risers, each capped with a ball.
+     */
+    renderSurfaceBar(ctx, jewelry) {
+        const lengthInches = jewelry.length || 0.5;
+        const gaugeInches = this.gaugeToInches(jewelry.gauge);
+        const ballSize = jewelry.ballSize || 0.125;
+
+        const length = this.inchesToPixels(lengthInches);
+        const thickness = this.inchesToPixels(gaugeInches);
+        const ballRadius = this.inchesToPixels(ballSize / 2);
+
+        // Riser height (the 90-degree bent legs) - proportional but capped so it
+        // stays a short right-angle bend rather than a second long bar.
+        const rise = Math.min(length * 0.28, this.inchesToPixels(0.16));
+
+        const color = this.getJewelryColor(jewelry.material);
+
+        // Staple: ball riser -> flat bar -> riser ball, all sharp 90-degree bends
+        ctx.beginPath();
+        ctx.moveTo(rise, -length / 2);
+        ctx.lineTo(0, -length / 2);
+        ctx.lineTo(0, length / 2);
+        ctx.lineTo(rise, length / 2);
+        ctx.lineWidth = thickness;
+        ctx.strokeStyle = color;
+        ctx.lineJoin = 'miter';
+        ctx.lineCap = 'butt';
+        ctx.stroke();
+
+        // Balls on top of each riser
+        ctx.beginPath();
+        ctx.arc(rise, -length / 2, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = color;
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.arc(rise, length / 2, ballRadius, 0, Math.PI * 2);
         ctx.fillStyle = color;
         ctx.fill();
     },
@@ -616,6 +732,102 @@ const ScaleRenderer = {
     },
 
     /**
+     * Tunnels share category 'plugs' but are hollow - you can see through the
+     * centre. Detect from the item name/id.
+     */
+    isTunnel(jewelry) {
+        return /tunnel/i.test((jewelry.name || '') + ' ' + (jewelry.id || ''));
+    },
+
+    /**
+     * Render tunnel - like a plug but hollow: two side walls with an open,
+     * see-through bore and ring-shaped (annular) flares instead of solid discs.
+     */
+    renderTunnel(ctx, jewelry) {
+        const diameterInches = jewelry.diameter || 0.5;
+        const lengthInches = jewelry.length || 0.375;
+
+        const diameter = this.inchesToPixels(diameterInches);
+        const length = this.inchesToPixels(lengthInches);
+        const flareType = jewelry.flareType || 'double';
+
+        const color = this.getJewelryColor(jewelry.material);
+
+        const bodyRadius = diameter / 2;
+        const flareRadius = bodyRadius * 1.35;
+        const flareHeight = Math.max(4, bodyRadius * 0.3);
+        const concaveDepth = bodyRadius * 0.2;
+        // Wall thickness - the rest of the bore is open.
+        const wall = Math.max(3, bodyRadius * 0.22);
+        const boreRadius = bodyRadius - wall;
+
+        // Left wall (outer concave edge -> inner bore edge)
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(-bodyRadius, -length / 2);
+        ctx.quadraticCurveTo(-bodyRadius + concaveDepth, 0, -bodyRadius, length / 2);
+        ctx.lineTo(-boreRadius, length / 2);
+        ctx.quadraticCurveTo(-boreRadius + concaveDepth, 0, -boreRadius, -length / 2);
+        ctx.closePath();
+        ctx.fill();
+
+        // Right wall (mirror)
+        ctx.beginPath();
+        ctx.moveTo(bodyRadius, -length / 2);
+        ctx.quadraticCurveTo(bodyRadius - concaveDepth, 0, bodyRadius, length / 2);
+        ctx.lineTo(boreRadius, length / 2);
+        ctx.quadraticCurveTo(boreRadius - concaveDepth, 0, boreRadius, -length / 2);
+        ctx.closePath();
+        ctx.fill();
+
+        // Open bore in the centre - dark channel to read as see-through depth
+        const bore = ctx.createLinearGradient(-boreRadius, 0, boreRadius, 0);
+        bore.addColorStop(0, 'rgba(0,0,0,0.55)');
+        bore.addColorStop(0.5, 'rgba(0,0,0,0.2)');
+        bore.addColorStop(1, 'rgba(0,0,0,0.55)');
+        ctx.fillStyle = bore;
+        ctx.fillRect(-boreRadius, -length / 2, boreRadius * 2, length);
+
+        // Ring-shaped flares (top always, bottom for double flare)
+        this.drawFlareRing(ctx, 0, -length / 2, flareRadius, boreRadius, flareHeight, color, true);
+        if (flareType === 'double') {
+            this.drawFlareRing(ctx, 0, length / 2, flareRadius, boreRadius, flareHeight, color, false);
+        }
+    },
+
+    /**
+     * Draw an annular (ring) flare for tunnels - solid disc with the bore
+     * opening cut through as a dark ellipse.
+     */
+    drawFlareRing(ctx, x, y, outerRadius, boreRadius, height, color, isTop) {
+        const offset = isTop ? -height / 2 : height / 2;
+
+        // Outer flare disc
+        const highlight = ctx.createRadialGradient(x, y + offset - height * 0.2, 0, x, y + offset, outerRadius);
+        highlight.addColorStop(0, this.adjustColorBrightness(color, 30));
+        highlight.addColorStop(0.7, color);
+        highlight.addColorStop(1, this.adjustColorBrightness(color, -20));
+        ctx.fillStyle = highlight;
+        ctx.beginPath();
+        ctx.ellipse(x, y + offset, outerRadius, height / 2, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Bore opening - dark ellipse showing the hole through the tunnel
+        const openingHeight = (height / 2) * (boreRadius / outerRadius);
+        ctx.fillStyle = 'rgba(0,0,0,0.6)';
+        ctx.beginPath();
+        ctx.ellipse(x, y + offset, boreRadius, openingHeight, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Inner rim for depth
+        ctx.strokeStyle = this.adjustColorBrightness(color, -30);
+        ctx.lineWidth = Math.max(1, height * 0.12);
+        ctx.beginPath();
+        ctx.ellipse(x, y + offset, boreRadius, openingHeight, 0, 0, Math.PI * 2);
+        ctx.stroke();
+    },
+
+    /**
      * Draw a flare disc for plugs
      */
     drawFlare(ctx, x, y, radius, height, color, isTop) {
@@ -799,7 +1011,10 @@ const StorageManager = {
 const DarkModeManager = {
     init() {
         // Load saved theme preference
-        const savedTheme = localStorage.getItem('theme') || 'light';
+        // Inside the site iframe the head bridge owns the theme; standalone defaults to dark
+        const savedTheme = (window.self !== window.top)
+            ? (document.documentElement.getAttribute('data-theme') || 'dark')
+            : (localStorage.getItem('theme') || 'dark');
         this.setTheme(savedTheme, false);
 
         // Bind toggle button
@@ -813,19 +1028,12 @@ const DarkModeManager = {
 
     setTheme(theme, save = true) {
         document.documentElement.setAttribute('data-theme', theme);
+        document.body.classList.toggle('dark-mode', theme === 'dark');
 
-        // Update button text and icon
-        const icon = document.getElementById('dark-mode-icon');
-        const text = document.getElementById('dark-mode-text');
-
-        if (icon && text) {
-            if (theme === 'dark') {
-                icon.textContent = '☀️';
-                text.textContent = 'Light Mode';
-            } else {
-                icon.textContent = '🌙';
-                text.textContent = 'Dark Mode';
-            }
+        // Update button icon
+        const icon = document.querySelector('.dark-mode-icon');
+        if (icon) {
+            icon.textContent = theme === 'dark' ? '☀️' : '◐';
         }
 
         // Save to localStorage
@@ -850,94 +1058,72 @@ const DarkModeManager = {
 // Embed Functionality
 // ===================================
 function showEmbedModal() {
-    const embedUrl = 'https://poliinternational.com/wp-content/standalone-tools/jewelry-size-visualizer/embed.html';
-    const embedCode = `<iframe src="${embedUrl}" width="100%" height="800" frameborder="0" style="border:none;border-radius:8px;"></iframe>`;
-
-    const modalHTML = `
-        <div class="modal" id="embed-modal">
-            <div class="modal__overlay" onclick="closeEmbedModal()"></div>
-            <div class="modal__content">
-                <div class="modal__header">
-                    <h3 class="modal__title">⚡ Free Embed Code</h3>
-                    <button class="modal__close" onclick="closeEmbedModal()" aria-label="Close modal">
-                        <span>×</span>
-                    </button>
-                </div>
-                <div class="modal__body">
-                    <p class="modal__description">
-                        Copy the code below and paste it into your website to embed this jewelry size visualizer tool.
-                    </p>
-
-                    <div class="embed-code-container">
-                        <textarea
-                            id="embed-code-textarea"
-                            class="embed-code-textarea"
-                            readonly
-                            onclick="this.select()"
-                        >${embedCode}</textarea>
-                    </div>
-
-                    <div class="embed-instructions">
-                        <h4>📋 How to Embed:</h4>
-                        <ol>
-                            <li>Click the code above to select all</li>
-                            <li>Copy the code (Ctrl+C or Cmd+C)</li>
-                            <li>Paste it into your website's HTML where you want the tool to appear</li>
-                            <li>Adjust the width and height parameters as needed</li>
-                        </ol>
-                    </div>
-                </div>
-                <div class="modal__footer">
-                    <button class="btn btn--secondary" onclick="closeEmbedModal()">Close</button>
-                    <button class="btn btn--primary" onclick="copyEmbedCode()">📋 Copy Code</button>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // Add modal to body
-    const modalContainer = document.createElement('div');
-    modalContainer.innerHTML = modalHTML;
-    document.body.appendChild(modalContainer.firstElementChild);
-
-    // Prevent body scroll
-    document.body.style.overflow = 'hidden';
-
-    // Auto-select the code
-    setTimeout(() => {
-        const textarea = document.getElementById('embed-code-textarea');
+    const modal = document.getElementById('embed-modal');
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Auto-select the code
+        const textarea = document.getElementById('embed-code');
         if (textarea) {
-            textarea.select();
+            // It's a <code> element now, so we can't select() it like a textarea
+            // but we can highlight it or just leave it
         }
-    }, 100);
+    }
 }
 
 function closeEmbedModal() {
     const modal = document.getElementById('embed-modal');
     if (modal) {
-        modal.remove();
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
     }
-    // Restore body scroll
-    document.body.style.overflow = '';
 }
 
 function copyEmbedCode() {
-    const textarea = document.getElementById('embed-code-textarea');
-    if (textarea) {
-        textarea.select();
-        document.execCommand('copy');
-
-        // Show feedback
-        const copyButton = event.target;
-        const originalText = copyButton.innerHTML;
-        copyButton.innerHTML = '✅ Copied!';
-        copyButton.disabled = true;
-
-        setTimeout(() => {
-            copyButton.innerHTML = originalText;
-            copyButton.disabled = false;
-        }, 2000);
+    const codeElement = document.getElementById('embed-code');
+    if (codeElement) {
+        const text = codeElement.textContent;
+        navigator.clipboard.writeText(text).then(() => {
+            // Show feedback
+            const successMsg = document.getElementById('copy-success');
+            if (successMsg) {
+                successMsg.style.display = 'block';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 3000);
+            }
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
     }
+}
+
+// Email Form Handler
+function initEmailForms() {
+    const forms = document.querySelectorAll('.email-form');
+    forms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emailInput = form.querySelector('input[type="email"]');
+            const email = emailInput.value;
+            const location = form.dataset.location;
+
+            console.log(`📧 Newsletter signup: ${email} from ${location}`);
+            
+            // Show success (you could add actual success messages to the DOM)
+            const button = form.querySelector('button');
+            const originalText = button.textContent;
+            button.textContent = '✅ Subscribed!';
+            button.disabled = true;
+            emailInput.value = '';
+
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 3000);
+        });
+    });
 }
 
 // Make functions globally available
@@ -1048,6 +1234,21 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('✅ Embed button initialized');
         }
 
+        // Initialize modal close buttons
+        const closeButtons = document.querySelectorAll('.modal__close, #embed-modal-close');
+        closeButtons.forEach(btn => {
+            btn.addEventListener('click', closeEmbedModal);
+        });
+
+        // Initialize copy button
+        const copyBtn = document.getElementById('copy-embed-code');
+        if (copyBtn) {
+            copyBtn.addEventListener('click', copyEmbedCode);
+        }
+
+        // Initialize email forms
+        initEmailForms();
+
         // Check if calibration is needed
         if (!AppState.isCalibrated) {
             // Show calibration banner
@@ -1069,9 +1270,11 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Auto-save state before leaving
-window.addEventListener('beforeunload', () => {
-    StorageManager.saveState();
-});
+if (typeof window.addEventListener === 'function') {
+    window.addEventListener('beforeunload', () => {
+        StorageManager.saveState();
+    });
+}
 
 // Make available globally for browser
 if (typeof window !== 'undefined') {
