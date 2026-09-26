@@ -20,7 +20,8 @@ const ComparisonModule = {
 
         // Bind slot click events
         document.querySelectorAll('.compare-slot').forEach(slot => {
-            slot.addEventListener('click', () => {
+            slot.addEventListener('click', (e) => {
+                if (e.target.closest('button')) return;
                 const slotNum = parseInt(slot.dataset.slot);
                 this.selectItemForSlot(slotNum);
             });
@@ -33,6 +34,7 @@ const ComparisonModule = {
     },
 
     createSelectorModal() {
+        const t = (k, fb) => (window.i18n ? window.i18n.t(k) : fb);
         const modal = document.createElement('div');
         modal.id = 'jewelry-selector-modal';
         modal.className = 'modal';
@@ -41,23 +43,23 @@ const ComparisonModule = {
             <div class="modal__overlay"></div>
             <div class="modal__content" style="max-width: 900px;">
                 <div class="modal__header">
-                    <h3 class="modal__title">Select Jewelry to Compare</h3>
+                    <h3 class="modal__title" data-i18n="compare.modal.title">${t('compare.modal.title', 'Select Jewelry to Compare')}</h3>
                     <button class="modal__close" id="selector-modal-close">✕</button>
                 </div>
                 <div class="modal__body">
                     <div class="selector-filters" style="display: flex; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
                         <select id="selector-category" class="filter-select" style="flex: 1; min-width: 150px;">
-                            <option value="all">All Categories</option>
-                            <option value="rings">Rings</option>
-                            <option value="labrets">Labrets & Studs</option>
-                            <option value="barbells">Barbells</option>
-                            <option value="circular">Circular Barbells</option>
-                            <option value="captive">Ball Closure Rings (BCR)</option>
-                            <option value="clickers">Clickers</option>
-                            <option value="plugs">Plugs & Tunnels</option>
+                            <option value="all" data-i18n="compare.modal.allCategories">${t('compare.modal.allCategories', 'All Categories')}</option>
+                            <option value="rings" data-i18n="visualizer.filter.rings">${t('visualizer.filter.rings', 'Rings')}</option>
+                            <option value="labrets" data-i18n="visualizer.filter.labrets">${t('visualizer.filter.labrets', 'Labrets & Studs')}</option>
+                            <option value="barbells" data-i18n="visualizer.filter.barbells">${t('visualizer.filter.barbells', 'Barbells')}</option>
+                            <option value="circular" data-i18n="visualizer.filter.circular">${t('visualizer.filter.circular', 'Circular Barbells')}</option>
+                            <option value="captive" data-i18n="visualizer.filter.captive">${t('visualizer.filter.captive', 'Ball Closure Rings (BCR)')}</option>
+                            <option value="clickers" data-i18n="visualizer.filter.clickers">${t('visualizer.filter.clickers', 'Clickers')}</option>
+                            <option value="plugs" data-i18n="visualizer.filter.plugs">${t('visualizer.filter.plugs', 'Plugs & Tunnels')}</option>
                         </select>
                         <select id="selector-gauge" class="filter-select" style="flex: 1; min-width: 150px;">
-                            <option value="all">All Gauges</option>
+                            <option value="all" data-i18n="compare.modal.allGauges">${t('compare.modal.allGauges', 'All Gauges')}</option>
                             <option value="20g">20g</option>
                             <option value="18g">18g</option>
                             <option value="16g">16g</option>
@@ -71,7 +73,7 @@ const ComparisonModule = {
                             <option value="0g">0g</option>
                             <option value="00g">00g</option>
                         </select>
-                        <input type="text" id="selector-search" placeholder="Search jewelry..." class="filter-select" style="flex: 1; min-width: 200px; padding: 0.5rem 1rem;">
+                        <input type="text" id="selector-search" placeholder="${t('compare.modal.searchPlaceholder', 'Search jewelry...')}" data-i18n-placeholder="compare.modal.searchPlaceholder" class="filter-select" style="flex: 1; min-width: 200px; padding: 0.5rem 1rem;">
                     </div>
                     <div id="selector-gallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; max-height: 400px; overflow-y: auto; padding: 1rem; background: var(--bg-secondary); border-radius: 8px;">
                         <!-- Items will be populated here -->
@@ -140,7 +142,8 @@ const ComparisonModule = {
         items = items.slice(0, 50);
 
         if (items.length === 0) {
-            gallery.innerHTML = '<p style="text-align: center; color: var(--text-tertiary); padding: 2rem;">No jewelry found matching filters</p>';
+            const noFound = window.i18n ? window.i18n.t('compare.noJewelryFound') : 'No jewelry found matching filters';
+            gallery.innerHTML = `<p style="text-align: center; color: var(--text-tertiary); padding: 2rem;">${noFound}</p>`;
             return;
         }
 
@@ -235,6 +238,8 @@ const ComparisonModule = {
     },
 
     updateSlots(items) {
+        const t = (k, fb) => (window.i18n ? window.i18n.t(k) : fb);
+        const removeLabel = t('compare.removeBtn', 'Remove');
         document.querySelectorAll('.compare-slot').forEach((slot, index) => {
             if (items[index]) {
                 const item = items[index];
@@ -244,7 +249,7 @@ const ComparisonModule = {
                         <canvas width="80" height="80" data-jewelry-id="${item.id}" style="display: block; margin: 0 auto 0.5rem;"></canvas>
                         <h4 style="font-size: 0.875rem; margin-bottom: 0.25rem;">${item.name}</h4>
                         <p style="font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.5rem;">${item.gauge} (${gaugeMM}mm)</p>
-                        <button class="btn btn--small" onclick="ComparisonModule.removeItem(${index})">✕ Remove</button>
+                        <button class="btn btn--small" onclick="ComparisonModule.removeItem(${index})">✕ ${removeLabel}</button>
                     </div>
                 `;
                 slot.classList.add('filled');
@@ -259,10 +264,11 @@ const ComparisonModule = {
             } else {
                 // Reset to empty state
                 const slotNum = index + 1;
+                const slotText = t(`compare.addItem${slotNum}`, `Click to Add Item ${slotNum}`);
                 slot.innerHTML = `
                     <div class="compare-slot__empty">
                         <span class="compare-slot__icon">+</span>
-                        <span class="compare-slot__text">Click to Add Item ${slotNum}</span>
+                        <span class="compare-slot__text">${slotText}</span>
                     </div>
                 `;
                 slot.classList.remove('filled');
@@ -301,6 +307,8 @@ const ComparisonModule = {
         const tbody = document.getElementById('comparison-tbody');
         if (!tbody) return;
 
+        const t = (k, fb) => (window.i18n ? window.i18n.t(k) : fb);
+
         // Update headers
         items.forEach((item, index) => {
             const header = document.getElementById(`compare-header-${index + 1}`);
@@ -308,10 +316,17 @@ const ComparisonModule = {
         });
 
         // Build comparison rows
-        const rows = ['Gauge', 'Size', 'Material', 'Locations', 'Weight'];
+        const rows = [
+            { id: 'Gauge', label: t('visualizer.detail.gauge', 'Gauge') },
+            { id: 'Size', label: t('compare.rowSize', 'Size') },
+            { id: 'Material', label: t('visualizer.detail.material', 'Material') },
+            { id: 'Locations', label: t('compare.rowLocations', 'Locations') },
+            { id: 'Weight', label: t('compare.rowWeight', 'Weight') }
+        ];
+
         tbody.innerHTML = rows.map(row => {
             const cells = items.map(item => {
-                switch(row) {
+                switch(row.id) {
                     case 'Gauge':
                         const gaugeMM = (ScaleRenderer.gaugeToInches(item.gauge) * 25.4).toFixed(1);
                         return `${item.gauge} (${gaugeMM}mm)`;
@@ -325,13 +340,13 @@ const ComparisonModule = {
                     case 'Material':
                         return item.material;
                     case 'Locations':
-                        return item.locations.join(', ');
+                        return item.locations.map(loc => t('location.' + loc, loc)).join(', ');
                     default:
                         return '--';
                 }
             }).join('</td><td>');
 
-            return `<tr><td><strong>${row}</strong></td><td>${cells}</td></tr>`;
+            return `<tr><td><strong>${row.label}</strong></td><td>${cells}</td></tr>`;
         }).join('');
     },
 
