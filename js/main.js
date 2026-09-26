@@ -943,15 +943,37 @@ function initTabNavigation() {
             tabContents.forEach(content => content.classList.remove('active'));
 
             tab.classList.add('active');
-            document.getElementById(`tab-${targetTab}`).classList.add('active');
+            const targetEl = document.getElementById(`tab-${targetTab}`);
+            if (targetEl) {
+                targetEl.classList.add('active');
+            }
 
             // Update app state
             AppState.currentTab = targetTab;
 
-            // Log for analytics
+            // Specific tab render hooks
+            if (targetTab === 'fit-card' && typeof FitCardModule !== 'undefined') {
+                FitCardModule.render();
+            } else if (targetTab === 'curved-barbell' && typeof CurvedBarbellCalculator !== 'undefined') {
+                CurvedBarbellCalculator.calculate();
+            } else if (targetTab === 'industrial-barbell' && typeof IndustrialBarbellCalculator !== 'undefined') {
+                IndustrialBarbellCalculator.calculate();
+            } else if (targetTab === 'photo-measure' && typeof PhotoMeasureModule !== 'undefined') {
+                PhotoMeasureModule.onTabActivated();
+            } else if (targetTab === 'collection' && typeof JewelleryCollectionModule !== 'undefined') {
+                JewelleryCollectionModule.render();
+            }
+
             console.log(`Switched to tab: ${targetTab}`);
         });
     });
+
+    window.switchTab = function(targetTab) {
+        const navTab = document.querySelector(`.nav-tab[data-tab="${targetTab}"]`);
+        if (navTab) {
+            navTab.click();
+        }
+    };
 }
 
 // ===================================
@@ -978,21 +1000,35 @@ const StorageManager = {
     },
 
     loadState() {
+        let loaded = false;
         try {
+            // First check dedicated screen calibration storage
+            const calRaw = localStorage.getItem('poli_screen_calibration');
+            if (calRaw) {
+                const calData = JSON.parse(calRaw);
+                if (calData && calData.isCalibrated === true && typeof calData.pixelsPerInch === 'number') {
+                    AppState.isCalibrated = true;
+                    AppState.pixelsPerInch = calData.pixelsPerInch;
+                    loaded = true;
+                }
+            }
+
             const saved = localStorage.getItem(this.STORAGE_KEY);
             if (saved) {
                 const state = JSON.parse(saved);
-                AppState.isCalibrated = state.isCalibrated || false;
-                AppState.pixelsPerInch = state.pixelsPerInch || 96;
+                if (!loaded) {
+                    AppState.isCalibrated = Boolean(state.isCalibrated);
+                    AppState.pixelsPerInch = state.pixelsPerInch || 96;
+                }
                 AppState.savedItems = state.savedItems || [];
                 AppState.userPreferences = state.userPreferences || {};
-                console.log('State loaded successfully');
+                console.log('State loaded successfully. Calibrated:', AppState.isCalibrated);
                 return true;
             }
         } catch (error) {
             console.error('Failed to load state:', error);
         }
-        return false;
+        return loaded;
     },
 
     clearState() {
@@ -1099,33 +1135,6 @@ function copyEmbedCode() {
     }
 }
 
-// Email Form Handler
-function initEmailForms() {
-    const forms = document.querySelectorAll('.email-form');
-    forms.forEach(form => {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const emailInput = form.querySelector('input[type="email"]');
-            const email = emailInput.value;
-            const location = form.dataset.location;
-
-            console.log(`📧 Newsletter signup: ${email} from ${location}`);
-            
-            // Show success (you could add actual success messages to the DOM)
-            const button = form.querySelector('button');
-            const originalText = button.textContent;
-            button.textContent = '✅ Subscribed!';
-            button.disabled = true;
-            emailInput.value = '';
-
-            setTimeout(() => {
-                button.textContent = originalText;
-                button.disabled = false;
-            }, 3000);
-        });
-    });
-}
-
 // Make functions globally available
 window.showEmbedModal = showEmbedModal;
 window.closeEmbedModal = closeEmbedModal;
@@ -1156,7 +1165,21 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Initialize dark mode first
+        // Initialize i18n first
+        if (typeof window.i18n !== 'undefined') {
+            if (typeof window.i18n.init === 'function') {
+                window.i18n.init();
+            }
+            if (typeof window.i18n.applyToDOM === 'function') {
+                window.i18n.applyToDOM();
+            }
+            const currentLoc = (typeof window.i18n.getCurrentLocale === 'function')
+                ? window.i18n.getCurrentLocale()
+                : (typeof window.i18n.getLocale === 'function' ? window.i18n.getLocale() : (window.i18n.locale || 'en'));
+            console.log('✅ i18n initialized:', currentLoc);
+        }
+
+        // Initialize dark mode
         DarkModeManager.init();
         console.log('✅ Dark mode initialized');
 
@@ -1211,20 +1234,57 @@ document.addEventListener('DOMContentLoaded', () => {
             console.warn('⚠️ AnatomyGuide not available');
         }
 
-        // Initialize style selector
-        if (typeof StyleSelector !== 'undefined') {
-            StyleSelector.init();
-            console.log('✅ Style selector initialized');
+        // Initialize clinical and material matrices
+        if (typeof ClinicalMatricesModule !== 'undefined') {
+            ClinicalMatricesModule.init();
+            console.log('✅ Clinical & Material Matrices initialized');
         } else {
-            console.warn('⚠️ StyleSelector not available');
+            console.warn('⚠️ ClinicalMatricesModule not available');
         }
 
-        // Initialize stretching calculator
-        if (typeof StretchingCalculator !== 'undefined') {
-            StretchingCalculator.init();
-            console.log('✅ Stretching calculator initialized');
+        // Initialize curved barbell calculator
+        if (typeof CurvedBarbellCalculator !== 'undefined') {
+            CurvedBarbellCalculator.init();
+            console.log('✅ Curved Barbell Calculator initialized');
         } else {
-            console.warn('⚠️ StretchingCalculator not available');
+            console.warn('⚠️ CurvedBarbellCalculator not available');
+        }
+
+        // Initialize industrial barbell calculator
+        if (typeof IndustrialBarbellCalculator !== 'undefined') {
+            IndustrialBarbellCalculator.init();
+            console.log('✅ Industrial Barbell Calculator initialized');
+        } else {
+            console.warn('⚠️ IndustrialBarbellCalculator not available');
+        }
+
+        // Initialize Fit Card module
+        if (typeof FitCardModule !== 'undefined') {
+            FitCardModule.init();
+            console.log('✅ Fit Card module initialized');
+        } else {
+            console.warn('⚠️ FitCardModule not available');
+        }
+
+        // Initialize Photo Measurement module
+        if (typeof PhotoMeasureModule !== 'undefined') {
+            PhotoMeasureModule.init();
+            console.log('✅ Photo Measurement module initialized');
+        }
+
+        // Initialize Jewellery Collection module
+        if (typeof JewelleryCollectionModule !== 'undefined') {
+            JewelleryCollectionModule.init();
+            console.log('✅ Jewellery Collection module initialized');
+        }
+
+        // Handle direct hash navigation to tabs
+        if (window.location.hash) {
+            const hashTab = window.location.hash.replace('#', '');
+            const targetNav = document.querySelector(`.nav-tab[data-tab="${hashTab}"]`);
+            if (targetNav) {
+                targetNav.click();
+            }
         }
 
         // Initialize embed button
@@ -1245,9 +1305,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (copyBtn) {
             copyBtn.addEventListener('click', copyEmbedCode);
         }
-
-        // Initialize email forms
-        initEmailForms();
 
         // Check if calibration is needed
         if (!AppState.isCalibrated) {
