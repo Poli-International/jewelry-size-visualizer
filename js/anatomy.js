@@ -24,7 +24,7 @@ const AnatomyGuide = {
                 { type: 'Conch', gauge: '16g-12g', size: '3/8"-1/2" (10-12mm)' },
                 { type: 'Industrial', gauge: '14g', size: '1-3/8"-1-1/2" (35-38mm)' }
             ],
-            notes: 'Ear piercings are the most versatile. Lobe piercings heal in 6-8 weeks, cartilage in 6-12 months. Use titanium or gold for initial jewelry. Consider anatomy for industrial and daith piercings.'
+            notes: 'Ear piercings adhere to established professional practice. Lobe piercings heal in 6-8 weeks; cartilage requires 6-12 months. Initial piercings require verified implant-grade materials meeting ASTM F-136 titanium, ASTM F-138 steel, or nickel-free 14k/18k solid gold. Consult a qualified professional piercer to evaluate ear cartilage anatomy before industrial or daith procedures.'
         },
         nose: {
             name: 'Nose Piercings',
@@ -35,7 +35,7 @@ const AnatomyGuide = {
                 { type: 'Nostril Ring', gauge: '20g-18g', size: '5/16"-3/8" (8-10mm) diameter' },
                 { type: 'Septum', gauge: '16g-14g', size: '3/8"-1/2" (10-12mm) diameter' }
             ],
-            notes: 'Nostril piercings heal in 4-6 months. Septum piercings heal in 6-8 weeks (sweet spot). 18g is most common for nostrils. Titanium or gold recommended for healing.'
+            notes: 'Nostril piercings heal in 4-6 months; septums heal in 6-8 weeks when placed in the membranous columellar space. Established professional practice recommends 18g/16g ASTM F-136 titanium flat-back labrets for initial nostrils to prevent canal trauma. Hoop jewelry is advised only after complete fistula epithelization.'
         },
         lip: {
             name: 'Lip Piercings',
@@ -47,7 +47,7 @@ const AnatomyGuide = {
                 { type: 'Medusa', gauge: '16g', size: '5/16"-3/8" (8-10mm)' },
                 { type: 'Snake Bites', gauge: '16g-14g', size: '5/16"-1/2" (8-12mm)' }
             ],
-            notes: 'Lip piercings heal in 6-8 weeks. Start with longer posts for swelling (10-12mm), downsize after healing. Flat-back labrets recommended to protect teeth and gums.'
+            notes: 'Lip piercings heal in 6-8 weeks. Per established professional practice, initial placement requires a longer post (10-12mm) for physiological edema. A scheduled downsize at 3-4 weeks with a qualified professional piercer is critical to prevent oral mucosal erosion and dental abrasion.'
         },
         tongue: {
             name: 'Tongue Piercing',
@@ -57,7 +57,7 @@ const AnatomyGuide = {
                 { type: 'Tongue (standard)', gauge: '14g', size: '5/8"-3/4" (16-19mm) initial' },
                 { type: 'Tongue (healed)', gauge: '14g', size: '1/2"-5/8" (12-16mm) final' }
             ],
-            notes: 'Tongue piercings heal in 4-6 weeks but significant swelling first 10-14 days. Start with 7/8" or 3/4" barbell for swelling, downsize to 5/8" or 1/2" after healing. Use plastic or bioflex balls to protect teeth.'
+            notes: 'Tongue piercings heal in 4-6 weeks with significant initial vascular swelling (days 1-10). Established professional practice requires starting with an initial 3/4" or 7/8" 14g ASTM F-136 titanium barbell, followed by mandatory downsizing to 5/8" or 1/2" to avoid chipping dentition and damaging sublingual tissues.'
         },
         eyebrow: {
             name: 'Eyebrow Piercing',
@@ -66,7 +66,7 @@ const AnatomyGuide = {
             sizes: [
                 { type: 'Eyebrow', gauge: '16g', size: '3/8"-1/2" (10-12mm)' }
             ],
-            notes: 'Eyebrow piercings heal in 6-8 weeks but can migrate or reject. Curved barbells reduce rejection risk. Avoid makeup and facial products during healing. Consider placement carefully for anatomy.'
+            notes: 'Eyebrow piercings heal in 6-8 weeks. As surface-level piercings, curved barbells meeting ASTM F-136 titanium standards are specified to mitigate migration risk. Anatomical assessment by a qualified professional piercer ensures placement follows natural supraorbital ridge lines.'
         },
         navel: {
             name: 'Navel (Belly Button)',
@@ -76,7 +76,7 @@ const AnatomyGuide = {
                 { type: 'Navel (standard)', gauge: '14g', size: '7/16"-1/2" (11-12mm)' },
                 { type: 'Navel (deep)', gauge: '14g', size: '1/2"-5/8" (12-16mm)' }
             ],
-            notes: 'Navel piercings heal in 6-12 months. Anatomy is crucial - not everyone can be pierced. Avoid tight clothing and sleeping on stomach during healing. Floating navels available for different anatomy.'
+            notes: 'Navel piercings heal in 6-12 months. Anatomical compatibility requires a distinct superior lip and open navel cavity in seated and standing postures. Under established professional practice, floating navels or J-curves with ASTM F-136 titanium may be indicated for collapsing navels.'
         },
         nipple: {
             name: 'Nipple Piercings',
@@ -86,7 +86,7 @@ const AnatomyGuide = {
                 { type: 'Nipple (male)', gauge: '14g', size: '1/2"-5/8" (12-16mm)' },
                 { type: 'Nipple (female)', gauge: '14g', size: '1/2"-3/4" (12-19mm)' }
             ],
-            notes: 'Nipple piercings heal in 6-12 months. Straight barbells recommended for healing. Size varies significantly by anatomy - professional measurement essential. Rings after healing only.'
+            notes: 'Nipple piercings heal in 6-12 months. Established professional practice prescribes 14g or 12g straight barbells of implant-grade titanium (ASTM F-136) or surgical steel (ASTM F-138) to prevent wire migration. Accurate caliper sizing by a qualified professional piercer accounts for areolar expansion.'
         },
         surface: {
             name: 'Surface & Dermal Piercings',
@@ -96,7 +96,7 @@ const AnatomyGuide = {
                 { type: 'Surface Bar', gauge: '12g-14g', size: '1/2"-3/4" (12-19mm) between holes' },
                 { type: 'Dermal Anchor', gauge: '14g-12g', size: '1/4" (6mm) depth' }
             ],
-            notes: 'Surface piercings have high rejection risk (months to years). Placement and angle critical. Surface bars with 90° bends reduce rejection vs curved barbells. Dermals more stable but permanent removal may scar. Professional placement essential.'
+            notes: 'Surface bars require 90° rises and flat internal footings conforming to ASTM F-136 standards to dissipate superficial tissue tension. Single-point dermal anchors utilize perforated bases for tissue integration. Consultation and insertion by a qualified professional piercer is imperative.'
         },
         'male-genital': {
             name: 'Male Genital Piercings',
@@ -114,7 +114,7 @@ const AnatomyGuide = {
                 { type: 'Dydoe', gauge: '12g-10g', size: '1/2"-5/8" (12-16mm) circular barbell' },
                 { type: 'Foreskin', gauge: '14g-12g', size: '3/8"-1/2" (10-12mm) ring' }
             ],
-            notes: 'Male genital piercings heal in 4-12 weeks depending on type. PA piercings heal fastest (4-6 weeks), while transurethral piercings (apadravya/ampallang) take longer (8-12 weeks). Professional piercer consultation essential for proper placement. Anatomy varies significantly - not all piercings suitable for all individuals. Use implant-grade materials only. Sexual activity should wait until fully healed. Many piercings can be stretched over time with proper care.'
+            notes: 'Male genital piercings heal in 4-12 weeks depending on vascularity. Established professional practice recommends a minimum 12g-10g starting wire gauge for urethral piercings to eliminate wire-effect tissue cleavage. Consultation with a qualified professional piercer is essential to assess individual urogenital anatomy. Certified implant-grade materials (ASTM F-136 / ASTM F-138) must be used exclusively.'
         },
         'female-genital': {
             name: 'Female Genital Piercings',
@@ -131,7 +131,7 @@ const AnatomyGuide = {
                 { type: 'Christina', gauge: '14g', size: '1/2"-5/8" (12-16mm) surface bar' },
                 { type: 'Princess Albertina', gauge: '12g-10g', size: '1/2"-5/8" (12-16mm) circular barbell' }
             ],
-            notes: 'Female genital piercings heal in 4-12 weeks depending on type and location. VCH is most common and heals quickly (4-6 weeks). Clitoral piercings require specific anatomy - professional assessment essential. Inner labia piercings heal faster than outer (4-6 weeks vs 8-10 weeks). Triangle piercing is advanced and anatomy-dependent. Use implant-grade materials only. Avoid tight clothing during healing. Sexual activity should wait until fully healed. Some piercings enhance sensation - discuss with professional piercer.'
+            notes: 'Female genital piercings heal in 4-10 weeks based on location and microvascular supply. A thorough clinical assessment by a qualified professional piercer under established professional practice is mandatory to determine clitoral hood depth and vascular landmarks. Only ASTM F-136 implant titanium or solid biocompatible gold are indicated.'
         }
     },
 
@@ -149,6 +149,40 @@ const AnatomyGuide = {
             browseBtn.addEventListener('click', () => this.browseJewelry());
         }
 
+        const calcCbbBtn = document.getElementById('anatomy-calc-curved-barbell');
+        if (calcCbbBtn) {
+            calcCbbBtn.addEventListener('click', () => {
+                let targetPreset = 'rook';
+                if (this.currentLocation === 'eyebrow') {
+                    targetPreset = 'eyebrow';
+                } else if (this.currentLocation === 'navel') {
+                    targetPreset = 'navel';
+                } else if (this.currentLocation === 'ear') {
+                    targetPreset = 'rook';
+                }
+                if (typeof CurvedBarbellCalculator !== 'undefined') {
+                    CurvedBarbellCalculator.selectPreset(targetPreset);
+                }
+            });
+        }
+
+        const calcIbbBtn = document.getElementById('anatomy-calc-industrial-barbell');
+        if (calcIbbBtn) {
+            calcIbbBtn.addEventListener('click', () => {
+                const ibbTab = document.querySelector('[data-tab="industrial-barbell"]');
+                if (ibbTab) {
+                    ibbTab.click();
+                    const input = document.getElementById('ibb-hole-distance');
+                    if (input && !input.value) {
+                        input.value = '38';
+                    }
+                    if (typeof IndustrialBarbellCalculator !== 'undefined') {
+                        IndustrialBarbellCalculator.calculate();
+                    }
+                }
+            });
+        }
+
         console.log('🎯 Anatomy Guide initialized');
     },
 
@@ -157,6 +191,20 @@ const AnatomyGuide = {
         if (!data) return;
 
         this.currentLocation = location;
+
+        // Toggle curved barbell calculator button for locations using curved barbells
+        const calcCbbBtn = document.getElementById('anatomy-calc-curved-barbell');
+        if (calcCbbBtn) {
+            const hasCurvedBarbell = ['ear', 'eyebrow', 'navel'].includes(location);
+            calcCbbBtn.style.display = hasCurvedBarbell ? 'inline-flex' : 'none';
+        }
+
+        // Toggle industrial barbell calculator button for ear anatomy
+        const calcIbbBtn = document.getElementById('anatomy-calc-industrial-barbell');
+        if (calcIbbBtn) {
+            const hasIndustrial = location === 'ear';
+            calcIbbBtn.style.display = hasIndustrial ? 'inline-flex' : 'none';
+        }
 
         // Update active state
         document.querySelectorAll('.anatomy-btn').forEach(btn => {
