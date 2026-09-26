@@ -208,7 +208,7 @@ const Visualizer = {
                 console.error('❌ Error loading gallery:', error);
                 this.galleryContainer.innerHTML = `
                     <div class="gallery-loading">
-                        <p style="color: #EF4444;">Error loading jewelry: ${error.message}</p>
+                        <p style="color: var(--color-error);">Error loading jewelry: ${error.message}</p>
                         <p style="color: var(--text-tertiary); font-size: 0.875rem;">Please check the browser console for details.</p>
                     </div>
                 `;
@@ -231,9 +231,10 @@ const Visualizer = {
 
         if (this.allItems.length === 0) {
             console.warn('⚠️ No items to display');
+            const emptyMsg = window.i18n ? window.i18n.t('visualizer.emptyFiltered') : 'No jewelry found matching your filters. Try adjusting your selection.';
             this.galleryContainer.innerHTML = `
                 <div class="gallery-loading">
-                    <p style="color: var(--text-tertiary);">No jewelry found matching your filters. Try adjusting your selection.</p>
+                    <p style="color: var(--text-tertiary);">${emptyMsg}</p>
                 </div>
             `;
             return;
@@ -253,20 +254,25 @@ const Visualizer = {
 
         console.log(`   Generated HTML length: ${html.length} characters`);
 
+        const t = (k, fb, params) => (window.i18n ? window.i18n.t(k, params) : fb);
+
         // Add "Load More" button if there are more items
         if (hasMore) {
+            const remaining = this.allItems.length - endIndex;
+            const loadMoreText = t('visualizer.loadMore', `Load More (${remaining} remaining)`, { count: remaining });
             html += `
                 <div class="gallery-load-more">
                     <button class="btn btn--secondary btn--large" id="load-more-btn">
-                        Load More (${this.allItems.length - endIndex} remaining)
+                        ${loadMoreText}
                     </button>
                 </div>
             `;
         } else if (this.allItems.length > this.itemsPerPage) {
+            const showingAllText = t('visualizer.showingAll', `Showing all ${this.allItems.length} items`, { count: this.allItems.length });
             html += `
                 <div class="gallery-load-more">
                     <p style="color: var(--text-tertiary); text-align: center;">
-                        Showing all ${this.allItems.length} items
+                        ${showingAllText}
                     </p>
                 </div>
             `;
@@ -331,17 +337,23 @@ const Visualizer = {
             ? `L ${item.length}" (${(item.length * MeasurementStandards.MM_PER_INCH).toFixed(1)}mm)`
             : '';
 
+        const t = (k, fb) => (window.i18n ? window.i18n.t(k) : fb);
+        const popularBadge = t('visualizer.card.popular', 'Popular');
+        const gaugeLabel = t('visualizer.card.gauge', 'Gauge');
+        const sizeLabel = t('visualizer.card.size', 'Size');
+        const matLabel = t('visualizer.card.material', 'Material');
+
         return `
             <div class="jewelry-card" data-id="${item.id}">
                 <div class="jewelry-card__image">
                     <canvas class="jewelry-card__canvas" width="200" height="200" data-jewelry-id="${item.id}"></canvas>
-                    ${item.popular ? '<span class="jewelry-card__badge">Popular</span>' : ''}
+                    ${item.popular ? `<span class="jewelry-card__badge">${popularBadge}</span>` : ''}
                 </div>
                 <h3 class="jewelry-card__title">${item.name}</h3>
                 <div class="jewelry-card__specs">
-                    <span><strong>Gauge:</strong> ${item.gauge} (${gaugeMM}mm)</span>
-                    ${sizeMeasurement ? `<span><strong>Size:</strong> ${sizeMeasurement}</span>` : ''}
-                    <span><strong>Material:</strong> ${this.formatMaterial(item.material)}</span>
+                    <span><strong>${gaugeLabel}:</strong> ${item.gauge} (${gaugeMM}mm)</span>
+                    ${sizeMeasurement ? `<span><strong>${sizeLabel}:</strong> ${sizeMeasurement}</span>` : ''}
+                    <span><strong>${matLabel}:</strong> ${this.formatMaterial(item.material)}</span>
                 </div>
                 <div class="jewelry-card__tags">
                     ${item.locations.map(loc => `<span class="tag">${this.formatLocation(loc)}</span>`).join('')}
@@ -354,6 +366,9 @@ const Visualizer = {
      * Format material name for display
      */
     formatMaterial(material) {
+        if (window.i18n && window.i18n.has('material.' + material)) {
+            return window.i18n.t('material.' + material);
+        }
         const names = {
             'titanium': 'Implant-Grade Titanium',
             'steel': 'Surgical Steel',
@@ -370,6 +385,9 @@ const Visualizer = {
      * Format location name for display
      */
     formatLocation(location) {
+        if (window.i18n && window.i18n.has('location.' + location)) {
+            return window.i18n.t('location.' + location);
+        }
         const names = {
             'ear': 'Ear',
             'nose': 'Nose',
@@ -570,7 +588,7 @@ const Visualizer = {
 
         // Add to comparison list
         if (AppState.comparisonItems.length >= 4) {
-            alert('You can compare up to 4 items at once. Please remove an item first.');
+            alert(window.i18n ? window.i18n.t('visualizer.alertCompareMax') : 'You can compare up to 4 items at once. Please remove an item first.');
             return;
         }
 
@@ -603,7 +621,7 @@ const Visualizer = {
         const alreadySaved = AppState.savedItems.some(item => item.id === this.currentJewelry.id);
 
         if (alreadySaved) {
-            alert('This item is already in your collection!');
+            alert(window.i18n ? window.i18n.t('visualizer.alertAlreadySaved') : 'This item is already in your collection!');
             return;
         }
 
@@ -629,7 +647,7 @@ const Visualizer = {
         if (!saveBtn) return;
 
         const originalText = saveBtn.innerHTML;
-        saveBtn.innerHTML = '✓ Saved!';
+        saveBtn.innerHTML = window.i18n ? window.i18n.t('visualizer.toastSaved') : '✓ Saved!';
         saveBtn.disabled = true;
 
         setTimeout(() => {
