@@ -4,6 +4,9 @@
  */
 window.i18nDictionaries = window.i18nDictionaries || {};
 window.i18nDictionaries['th'] = {
+  "a11y.breadcrumb": "เส้นทางนำทาง",
+  "a11y.quick_language_switch": "เปลี่ยนภาษาอย่างรวดเร็ว",
+  "a11y.toggle_theme": "สลับธีม",
   "industrial.diagramLabels": "ลูกบอล  ←——ระยะห่างระหว่างรู——→  ลูกบอล\n      [      ค่าที่คุณกรอก     ]",
   "anatomy.browse.all": "ดูตัวเลือกทั้งหมด",
   "anatomy.browse.btn": "เรียกดูเครื่องประดับที่เข้ากันได้",
