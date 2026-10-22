@@ -4,6 +4,9 @@
  */
 window.i18nDictionaries = window.i18nDictionaries || {};
 window.i18nDictionaries['nl'] = {
+  "a11y.breadcrumb": "Kruimelpad",
+  "a11y.quick_language_switch": "Snel van taal wisselen",
+  "a11y.toggle_theme": "Thema wisselen",
   "industrial.diagramLabels": "kogel  ←——gat-tot-gat-afstand——→  kogel\n      [      uw invoer     ]",
   "anatomy.browse.all": "Alle opties bekijken",
   "anatomy.browse.btn": "Compatibele sieraden bekijken",
