@@ -91,17 +91,17 @@ const ClinicalMatricesModule = {
             healthcareNotes: 'Optimal temporary retainer during surgical procedures, radiographic imaging, MRI, and radiation therapy.'
         },
         {
-            alloy: 'Implant Polymers: Medical-Grade PTFE / Bioplast',
+            alloy: 'Polymers: Medical-Grade PTFE / Bioplast',
             standard: 'USP Class VI / ISO 10993',
             composition: 'Polytetrafluoroethylene (PTFE) or medical-grade polymer resin, plasticizer-free',
-            biocompatibility: 'Medical grade flexible polymer, biologically inert',
+            biocompatibility: 'Medical-grade flexible polymer',
             nickelContent: '0.00% (Non-metallic)',
             surfaceFinish: 'Flexible, smooth micro-machined surface',
             sterilization: 'Autoclave Steam (Max 121°C / 250°F for PTFE; do not exceed temperature rating)',
-            mriCompatibility: 'MRI Safe & CT Artifact-Free',
-            clinicalStatus: 'Approved for specialized pregnancy retainers, hospital surgery, or athletic adaptation',
+            mriCompatibility: 'No metal, not magnetic: tell the radiology staff and follow their decision',
+            clinicalStatus: 'Used for pregnancy retainers, sports, and in place of metal jewelry for medical procedures (the medical staff decide)',
             badge: 'USP Class VI Polymer',
-            healthcareNotes: 'Flexible shafts prevent abdominal tearing during late-term pregnancy and provide non-conductive safety during surgical electrosurgery/cautery.'
+            healthcareNotes: 'Flexible shafts follow a growing belly without pulling, and the jewelry contains no metal.'
         }
     ],
 
