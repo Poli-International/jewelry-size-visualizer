@@ -4,6 +4,9 @@
  */
 window.i18nDictionaries = window.i18nDictionaries || {};
 window.i18nDictionaries['de'] = {
+  "a11y.breadcrumb": "Brotkrumennavigation",
+  "a11y.quick_language_switch": "Schneller Sprachwechsel",
+  "a11y.toggle_theme": "Design wechseln",
   "industrial.diagramLabels": "Kugel  ←——Loch-zu-Loch-Abstand——→  Kugel\n      [      Ihre Eingabe     ]",
   "anatomy.browse.all": "Alle Optionen anzeigen",
   "anatomy.browse.btn": "Passenden Schmuck durchstöbern",
