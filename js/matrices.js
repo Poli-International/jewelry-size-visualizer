@@ -20,7 +20,7 @@ const ClinicalMatricesModule = {
             nickelContent: '0.00% (Completely Nickel-Free)',
             surfaceFinish: 'Mirror Polish Ra < 0.025 μm, Passivated per ASTM F-86',
             sterilization: 'Autoclave Steam (134°C / 273°F at 30 psi), EtO Gas, Plasma',
-            mriCompatibility: 'MR Conditional (non-ferromagnetic; can cause minor image artifact; the radiology staff decide)',
+            mriCompatibility: 'MRI Safe (Non-ferromagnetic, minimal radiofrequency artifact)',
             clinicalStatus: 'Clinical Standard: Approved for Initial Piercings & Long-term Implantation',
             badge: 'ASTM F-136 Certified',
             healthcareNotes: 'Recommended first-line material for individuals with metal sensitivities, compromised immune healing, or undergoing regular medical imaging.'
@@ -46,7 +46,7 @@ const ClinicalMatricesModule = {
             nickelContent: '0.00% (Completely Nickel-Free)',
             surfaceFinish: 'Electropolished / Mechanically polished with natural titanium dioxide passive layer',
             sterilization: 'Autoclave Steam (134°C / 273°F), EtO Gas, Plasma',
-            mriCompatibility: 'MR Conditional (non-ferromagnetic; the radiology staff decide)',
+            mriCompatibility: 'MRI Safe (Non-ferromagnetic, zero displacement force)',
             clinicalStatus: 'Approved for Initial & Healed Piercings',
             badge: 'ASTM F-67 Certified',
             healthcareNotes: 'Slightly more ductile than Ti-6Al-4V; commonly used for continuous rings and custom anatomical adaptations.'
@@ -59,7 +59,7 @@ const ClinicalMatricesModule = {
             nickelContent: '0.00% (Completely Nickel-Free)',
             surfaceFinish: 'High mirror finish, anodizable to vibrant hypoallergenic colors without plating',
             sterilization: 'Autoclave Steam (134°C), EtO Gas',
-            mriCompatibility: 'MR Conditional (non-ferromagnetic; the radiology staff decide)',
+            mriCompatibility: 'MRI Safe (Non-ferromagnetic)',
             clinicalStatus: 'Approved for Initial Piercings & Healed Fistulas',
             badge: 'Pure Niobium 99.9%',
             healthcareNotes: 'Ideal alternative for patients reporting idiopathic reactions to surgical stainless steel or titanium.'
@@ -72,7 +72,7 @@ const ClinicalMatricesModule = {
             nickelContent: '0.00% Nickel / 0.00% Cadmium',
             surfaceFinish: 'Hand-lapped high polish mirror finish; free of porosity, pitting, or tool marks',
             sterilization: 'Autoclave Steam (121°C - 134°C)',
-            mriCompatibility: 'MR Conditional (non-magnetic, but conductive; the radiology staff decide)',
+            mriCompatibility: 'MRI Safe (Non-magnetic noble metal)',
             clinicalStatus: 'Approved for Initial Piercings (Solid 14k/18k only; Gold plated/rolled/vermeil is strictly contraindicated)',
             badge: 'Solid Nickel-Free Gold',
             healthcareNotes: 'Plated, vermeil, or gold-filled jewelry is never permissible for healing piercings due to flaking, galvanic corrosion, and toxic sub-layer exposure.'
@@ -85,7 +85,7 @@ const ClinicalMatricesModule = {
             nickelContent: '0.00% (Zero metal content)',
             surfaceFinish: 'Fire-polished smooth radius, seamless, non-adherent to newly forming granulation tissue',
             sterilization: 'Autoclave Steam (134°C), Chemclave',
-            mriCompatibility: 'No metal, not magnetic: tell the radiology staff and follow their decision',
+            mriCompatibility: 'MRI Safe (Zero magnetic susceptibility, completely transparent to X-ray/CT/MRI)',
             clinicalStatus: 'Approved for Initial Piercings, Stretching, and Medical Retainers',
             badge: 'Borosilicate Glass',
             healthcareNotes: 'Optimal temporary retainer during surgical procedures, radiographic imaging, MRI, and radiation therapy.'
