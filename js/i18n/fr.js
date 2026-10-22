@@ -4,6 +4,9 @@
  */
 window.i18nDictionaries = window.i18nDictionaries || {};
 window.i18nDictionaries['fr'] = {
+  "a11y.breadcrumb": "Fil d'Ariane",
+  "a11y.quick_language_switch": "Changement rapide de langue",
+  "a11y.toggle_theme": "Changer de thème",
   "industrial.diagramLabels": "bille  ←——écart trou à trou——→  bille\n      [      votre saisie     ]",
   "anatomy.browse.all": "Voir toutes les options",
   "anatomy.browse.btn": "Parcourir les bijoux compatibles",
