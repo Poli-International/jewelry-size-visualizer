@@ -4,6 +4,9 @@
  */
 window.i18nDictionaries = window.i18nDictionaries || {};
 window.i18nDictionaries['en'] = {
+  "a11y.breadcrumb": "Breadcrumb",
+  "a11y.quick_language_switch": "Quick language switch",
+  "a11y.toggle_theme": "Toggle theme",
   "industrial.diagramLabels": "ball  ←——hole-to-hole span——→  ball\n      [      your input     ]",
   "anatomy.browse.all": "View All Options",
   "anatomy.browse.btn": "Browse Compatible Jewelry",
