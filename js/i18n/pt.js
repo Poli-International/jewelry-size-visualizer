@@ -4,6 +4,9 @@
  */
 window.i18nDictionaries = window.i18nDictionaries || {};
 window.i18nDictionaries['pt'] = {
+  "a11y.breadcrumb": "Trilha de navegação",
+  "a11y.quick_language_switch": "Troca rápida de idioma",
+  "a11y.toggle_theme": "Alternar tema",
   "industrial.diagramLabels": "esfera  ←——distância entre orifícios——→  esfera\n      [      o seu valor     ]",
   "anatomy.browse.all": "Ver todas as opções",
   "anatomy.browse.btn": "Explorar joias compatíveis",
